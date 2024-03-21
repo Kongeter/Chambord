@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0yu5cee50l3l"]
+
+[ext_resource type="Material" uid="uid://cdfq4y4ol2o5r" path="res://materials/grass.tres" id="1_butq0"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_f5rxh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_asndi"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xbi07"]
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+material_override = ExtResource("1_butq0")
+mesh = SubResource("PlaneMesh_f5rxh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.335428, 0, 0, 0, 0.186274, 0, 0.153619, 0.347761)
+mesh = SubResource("BoxMesh_asndi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.609284, 0, -0.134144, 0, 0.335428, 0, 0.632389, 0, 0.129243, 0.694235, 0.153619, 0.639837)
+mesh = SubResource("BoxMesh_asndi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.608909, 0, 0.13422, 0, 0.335428, 0, -0.63275, 0, 0.129163, -0.722558, 0.153619, 0.639837)
+mesh = SubResource("BoxMesh_asndi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.101808, 0, 0.0370377, 0)
+mesh = SubResource("PlaneMesh_xbi07")
