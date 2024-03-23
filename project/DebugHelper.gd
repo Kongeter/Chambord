@@ -4,13 +4,13 @@ class_name DebugHelper
 static func showDirection(x: int) -> void:
 	match x:
 		0:
-			print("↑")
-		1:
-			print("→")
-		2:
 			print("↓")
-		3:
+		1:
 			print("←")
+		2:
+			print("↑")
+		3:
+			print("→")
 
 static func showBoard(cards: Array, xMax, yMax) -> void:
 	var divider = "-"

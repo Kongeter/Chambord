@@ -4,7 +4,7 @@ const connectGroupsStreets = [
 							[[2]],
 							[],
 							[],
-							[[3,0]],
+							[[0,2]],
 							[],
 							[],
 						]

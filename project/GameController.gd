@@ -15,42 +15,13 @@ func _ready():
 	freeFigures.resize(numOfPlayers);
 	freeFigures.fill(numOfFigures);
 	
-	var tempc = Card.new(10,10,3,0,0,0)
-	#Scorer.getStreetOrCityConnection(tempc, 3, true)
-	#DebugHelper.showDirection(1)
-	DebugHelper.showCoord([Coord.new(1,1), Coord.new(2,3)],10,10)
-	#print(Helper.functionFindFirstIndex([2,1], (func(c): return (c == 1))))
-	#print(Coord.new(1,1).equals(1,1))
+	var tempc = Card.new(1,1,3,3,0,0)
+	Scorer.getStreetOrCityConnection(tempc, 3, true)
 	
+	#Closes Game instantly
+	await get_tree().create_timer(0.1).timeout
+	get_tree().quit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
-
-
-
-
-
-
-
-func moveScorer(newCard):
-	#wenn stadt: stadt flood von da aus
-	#wenn straße: straßen flood von da aus
-	#schauen ob im umkreis Klosten -> dann schauen ob somit fertig
-	pass
-	
-func endOfGameScorer():
-	#alle spielsteine:
-	#Wiese:
-	pass
-
-func grassFlood(card, quadrant, alreadyChecked):
-	#card.x 
-	#card.y
-	#quadrant 0-3 :0obenLinks dann 1obenRechts 2untenRechts 3untenLinks
-	pass
-
-
-func _grassNeighbor(x,y,quadrant):
 	pass
