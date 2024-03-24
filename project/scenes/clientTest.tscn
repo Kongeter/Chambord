@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://beplhhyfw3vj"]
+[gd_scene load_steps=4 format=3 uid="uid://beplhhyfw3vj"]
 
+[ext_resource type="Script" path="res://rpcTest.gd" id="1_tmxdc"]
 [ext_resource type="Script" path="res://Client.gd" id="1_x0fgo"]
-[ext_resource type="Script" path="res://scenes/RTCTest.gd" id="2_2t755"]
+[ext_resource type="PackedScene" uid="uid://drmhgulvvkskv" path="res://nodes/panel.tscn" id="3_7uer2"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_tmxdc")
 
 [node name="Client" type="Node" parent="."]
 script = ExtResource("1_x0fgo")
@@ -44,15 +46,9 @@ offset_right = 418.0
 offset_bottom = 160.0
 text = "Join Lobby"
 
-[node name="Button" type="Button" parent="."]
+[node name="Panel" parent="." instance=ExtResource("3_7uer2")]
 layout_mode = 0
-offset_left = 659.275
-offset_top = 158.0
-offset_right = 843.275
-offset_bottom = 249.0
-script = ExtResource("2_2t755")
 
 [connection signal="pressed" from="SendPacket" to="Client" method="_on_send_packet_pressed"]
 [connection signal="pressed" from="StartClient" to="Client" method="_on_start_client_pressed"]
 [connection signal="pressed" from="JoinLobby" to="Client" method="_on_join_lobby_pressed"]
-[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

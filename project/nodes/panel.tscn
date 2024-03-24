@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://drmhgulvvkskv"]
+
+[node name="Panel" type="Panel"]
+offset_left = 249.0
+offset_top = 340.0
+offset_right = 289.0
+offset_bottom = 380.0
