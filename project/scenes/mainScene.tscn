@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://d2j335s0qy3jy" path="res://scenes/Table.tscn" id="1_2i8qo"]
 [ext_resource type="Script" path="res://GameController.gd" id="1_5o2de"]
-[ext_resource type="PackedScene" uid="uid://b0yu5cee50l3l" path="res://tiles/D.tscn" id="2_gvn82"]
 [ext_resource type="Script" path="res://scenes/MainCamera.gd" id="3_r5ulx"]
+[ext_resource type="Script" path="res://scenes/GameField.gd" id="4_4m6m6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1oc0p"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -47,6 +47,4 @@ text = "bruh"
 
 [node name="Node3D" type="Node3D" parent="."]
 editor_description = "Spielfeld"
-
-[node name="MeshInstance3D" parent="Node3D" instance=ExtResource("2_gvn82")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.127542, 0.090435, 0.430412)
+script = ExtResource("4_4m6m6")

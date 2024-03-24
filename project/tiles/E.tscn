@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://b0yu5cee50l3l"]
+[gd_scene load_steps=11 format=3 uid="uid://cmvibab4deqhy"]
 
-[ext_resource type="Material" uid="uid://cdfq4y4ol2o5r" path="res://materials/grass.tres" id="1_butq0"]
+[ext_resource type="Material" uid="uid://cdfq4y4ol2o5r" path="res://materials/grass.tres" id="1_0oc8y"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f5rxh"]
 
@@ -9,8 +9,6 @@ albedo_color = Color(0.321569, 0.321569, 0.321569, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_asndi"]
 material = SubResource("StandardMaterial3D_jq8ig")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_xbi07"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e57p5"]
 albedo_color = Color(0.537255, 0.258824, 0, 1)
@@ -36,33 +34,29 @@ size = Vector2(1.2, 2)
 subdivide_width = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D"]
-material_override = ExtResource("1_butq0")
+material_override = ExtResource("1_0oc8y")
 mesh = SubResource("PlaneMesh_f5rxh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.335428, 0, 0, 0, 0.186274, 0, 0.153619, 0.347761)
+transform = Transform3D(0.000139555, 0, 0.186274, 0, 0.335428, 0, -1, 0, 2.59951e-05, 0.338139, 0.153618, 0.0240124)
 mesh = SubResource("BoxMesh_asndi")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.609284, 0, -0.134144, 0, 0.335428, 0, 0.632389, 0, 0.129243, 0.694235, 0.153619, 0.639837)
+transform = Transform3D(0.632474, 0, 0.129224, 0, 0.335428, 0, -0.609196, 0, 0.134162, 0.630312, 0.153618, -0.670182)
 mesh = SubResource("BoxMesh_asndi")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.608909, 0, 0.13422, 0, 0.335428, 0, -0.63275, 0, 0.129163, -0.722558, 0.153619, 0.639837)
+transform = Transform3D(-0.632665, 0, 0.129182, 0, 0.335428, 0, -0.608997, 0, -0.134202, 0.630114, 0.153618, 0.746611)
 mesh = SubResource("BoxMesh_asndi")
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.101808, 0, 0.0370377, 0)
-mesh = SubResource("PlaneMesh_xbi07")
-
 [node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.101808, 0, 0.0370377, 0.894559)
+transform = Transform3D(0.000139551, 0, 0.101808, 0, 1, 0, -1, 0, 1.4208e-05, 0.884937, 0.0370365, 0.0240887)
 mesh = SubResource("PlaneMesh_41i8s")
 
 [node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.101808, 0, 0.0370377, 0.707444)
+transform = Transform3D(0.000139551, 0, 0.101808, 0, 1, 0, -1, 0, 1.4208e-05, 0.677811, 0.0370365, 0.0307989)
 mesh = SubResource("PlaneMesh_fiw0y")
 
 [node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.101808, 0, 0.0370377, 0.506307)
+transform = Transform3D(0.000139551, 0, 0.101808, 0, 1, 0, -1, 0, 1.4208e-05, 0.476674, 0.0370365, 0.0307708)
 mesh = SubResource("PlaneMesh_m5gkb")

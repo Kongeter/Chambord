@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d031ypme1oxyq"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jlva5"]
+size = Vector2(1.5, 1.5)
+
+[node name="PreviewCard" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00040555, 0.00250864, 0.00376153)
+mesh = SubResource("PlaneMesh_jlva5")

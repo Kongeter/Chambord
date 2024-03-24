@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://c3lxgmn13hcp5"]
+
+[ext_resource type="Material" uid="uid://cdfq4y4ol2o5r" path="res://materials/grass.tres" id="1_meyis"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_f5rxh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_185v8"]
+albedo_color = Color(0.517647, 0.513726, 0.537255, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c3gqa"]
+material = SubResource("StandardMaterial3D_185v8")
+size = Vector3(0.6, 1, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_25f6o"]
+albedo_color = Color(0.737255, 0.203922, 0.2, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_klgf7"]
+material = SubResource("StandardMaterial3D_25f6o")
+size = Vector3(0.7, 0.5, 0.7)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0by0s"]
+size = Vector2(0.8, 2)
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+material_override = ExtResource("1_meyis")
+mesh = SubResource("PlaneMesh_f5rxh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.351638, 0)
+mesh = SubResource("BoxMesh_c3gqa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.749068, 0)
+mesh = SubResource("PrismMesh_klgf7")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.101808, -0.60151, 0.0370377, 0)
+mesh = SubResource("PlaneMesh_0by0s")
