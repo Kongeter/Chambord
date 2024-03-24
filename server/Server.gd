@@ -9,12 +9,15 @@ enum Message{
 	candidate,
 	offer,
 	answer,
-	checkIn
+	removeLobby,
+	checkIn,
+	error,
+	switchHost
 }
 
 var peer : WebSocketMultiplayerPeer = WebSocketMultiplayerPeer.new()
-var users = {}
-var lobbies = {}
+var users : Dictionary = {}
+var lobbies : Dictionary = {}
 
 var Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 # Called when the node enters the scene tree for the first time.
@@ -34,32 +37,80 @@ func _process(delta):
 			var dataString = packet.get_string_from_utf8()
 			var data = JSON.parse_string(dataString)
 			if data.message == Message.lobby:
-				JoinLobby(data.id, data.name, data.lobbyValue)
+				joinLobby(int(data.id), data.name, data.lobbyValue)
 			if data.message == Message.offer || data.message == Message.answer || data.message == Message.candidate:
 				print("source id is: " + str(data.orgPeer))
 				sendToPlayer(data.peer, data)
+			if data.message == Message.removeLobby:
+				destroyLobby(data.id)
 	pass
 	
 func peer_connected(id):
 	print("Peer conncted: " + str(id))
-	users[id]= {
-		"id" : id,
-		"message" : Message.id
+	users[id]= User.new(id, "")
+	var data = {
+		"id": id,
+		"message": Message.id
 	}
-	peer.get_peer(id).put_packet(JSON.stringify(users[id]).to_utf8_buffer())
+	peer.get_peer(id).put_packet(JSON.stringify(data).to_utf8_buffer())
 	pass
 func peer_disconnected(id):
+	disconnectFromLobby(id)
+	users.erase(id)
 	pass
 	
 func startServer():
 	peer.create_server(8915)
 	print("Server started")
 	pass
+	
+func disconnectFromLobby(userId):
+	if users[userId].Lobby != "":
+		var lobbyId = users[userId].Lobby
+		lobbies[lobbyId].Players.erase(userId)
+		users[userId].Lobby = ""
+		if lobbies[lobbyId].Players.size() == 0:
+			lobbies.erase(lobbyId)
+			print("lobby erased")
+			return
+		if lobbies[lobbyId].HostID == userId:
+			transferHost(lobbyId)
 
-func JoinLobby(userId, userName, lobbyId):
+func transferHost(lobbyId):
+	print("host transfer")
+	print(lobbies[lobbyId].Players.keys()[0])
+	lobbies[lobbyId].HostID = lobbies[lobbyId].Players[lobbies[lobbyId].Players.keys()[0]]["id"]
+	for p in lobbies[lobbyId].Players:
+		
+		var lobbyData = {
+			"message" : Message.switchHost,
+			"players" : JSON.stringify(lobbies[lobbyId].Players),
+			"host" : lobbies[lobbyId].HostID,
+			"lobbyValue" : lobbyId
+		}
+		print("switched host")
+		sendToPlayer(p, lobbyData)
+	
+func destroyLobby(lobbyId):
+	for p in lobbies[lobbyId].Players:
+		if users.has(p):
+			users[p].Lobby = ""
+	lobbies.erase(lobbyId)
+	
+	
+func joinLobby(userId, userName, lobbyId):
 	if lobbyId == "":
 		lobbyId = generateRandomString()
 		lobbies[lobbyId] = Lobby.new(userId)
+	if lobbies[lobbyId].Players.size() >= 5:
+		#too many players, return error
+		var errorData = {
+			"message" : Message.error,
+			"error" : "too many players"
+		}
+		sendToPlayer(userId, errorData)
+		return
+		
 	var player = lobbies[lobbyId].AddPlayer(userId, userName)
 	
 	for p in lobbies[lobbyId].Players:
@@ -95,6 +146,7 @@ func JoinLobby(userId, userName, lobbyId):
 		
 	}
 	sendToPlayer(userId, data)
+	users[userId].Lobby = lobbyId
 	
 
 func sendToPlayer(userId, data):
