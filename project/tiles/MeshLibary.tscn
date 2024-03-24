@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj5levd127xhh"]
+
+[ext_resource type="PackedScene" uid="uid://b0yu5cee50l3l" path="res://tiles/D.tscn" id="1_4e1vl"]
+
+[node name="MeshLibary" type="Node2D"]
+
+[node name="MeshInstance3D" parent="." instance=ExtResource("1_4e1vl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.290426, 0.0804176, -0.0654719)
+
+[node name="MeshInstance3D2" parent="." instance=ExtResource("1_4e1vl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.290426, 0.0804176, -0.0654719)

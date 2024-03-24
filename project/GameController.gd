@@ -19,8 +19,8 @@ func _ready():
 	Scorer.getStreetOrCityConnection(tempc, 3, true)
 	
 	#Closes Game instantly
-	await get_tree().create_timer(0.1).timeout
-	get_tree().quit()
+	#await get_tree().create_timer(0.1).timeout
+	#get_tree().quit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

@@ -6,8 +6,6 @@ func moveRight():
 	print("huh" + str(sender_id))
 	position.x = position.x + 5*(-1 ** sender_id)
 
-	
-
 
 func _on_pressed():
 	moveRight.rpc()
