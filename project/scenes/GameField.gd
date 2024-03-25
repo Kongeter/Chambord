@@ -9,8 +9,8 @@ func tileChooser(type: String, possiblePlaces:Array):
 	return [xClicked, yClicked]
 
 func _on_camera_3d_preview_tile_clicked(x, y):
-	xClicked = int(x) / 2 
-	yClicked = int(y) / 2
+	xClicked = int(floor(x/ 2))  
+	yClicked = int(floor(y/ 2))
 
 func placeTile(x,y,rotation_,type):
 	var tilePath = "res://tiles/"+type+".tscn"
