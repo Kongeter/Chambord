@@ -1,10 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://d031ypme1oxyq"]
+[gd_scene load_steps=3 format=3 uid="uid://d031ypme1oxyq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j1c03"]
+size = Vector3(1.50698, 0.0797119, 1.50341)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_jlva5"]
 size = Vector2(1.5, 1.5)
 
 [node name="PreviewCard" type="Node3D"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00235176, 0.00604248, 0.00375271)
+shape = SubResource("BoxShape3D_j1c03")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00040555, 0.00250864, 0.00376153)
 mesh = SubResource("PlaneMesh_jlva5")
+skeleton = NodePath("../..")
