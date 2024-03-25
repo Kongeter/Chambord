@@ -19,6 +19,22 @@ sky = SubResource("Sky_dajml")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="Environment" id="Environment_c45s4"]
+background_mode = 1
+background_color = Color(0.00392157, 0.00392157, 0.00392157, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.435294, 0.592157, 0.701961, 1)
+ssao_radius = 15.76
+ssao_intensity = 16.0
+ssao_ao_channel_affect = 0.6
+fog_enabled = true
+fog_light_color = Color(0.0627451, 0.109804, 0.14902, 1)
+fog_light_energy = 1.22
+fog_density = 0.0
+fog_sky_affect = 0.5
+fog_height_density = 2.0105
+adjustment_brightness = 1.59
+
 [node name="Node3D" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.074028, -0.0660019, 0.0475349)
 script = ExtResource("1_6ri7u")
@@ -27,23 +43,27 @@ script = ExtResource("1_6ri7u")
 environment = SubResource("Environment_q0htv")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 17.1043, 0)
+transform = Transform3D(0.7884, -0.506226, 0.349514, -0.518498, -0.241093, 0.820386, -0.331036, -0.828015, -0.452555, 0, 17.1043, 0)
+light_energy = 2.939
 shadow_enabled = true
 
 [node name="Table" parent="." instance=ExtResource("1_2i8qo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.34635, -0.35872, 0.294474)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 
 [node name="GameField" type="Node3D" parent="."]
 unique_name_in_owner = true
 editor_description = "Spielfeld"
 script = ExtResource("4_4m6m6")
+visible = false
 
 [node name="GameController" type="Node" parent="."]
 script = ExtResource("1_5o2de")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.53, 12.864, 9)
+transform = Transform3D(0.707107, -0.664463, 0.241845, 0, 0.34202, 0.939693, -0.707107, -0.664463, 0.241845, 0.53, 6.96479, 9)
+environment = SubResource("Environment_c45s4")
+current = true
 script = ExtResource("3_r5ulx")
 
 [node name="TileLabel" type="Label" parent="."]

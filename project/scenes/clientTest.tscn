@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://beplhhyfw3vj"]
+[gd_scene load_steps=3 format=3 uid="uid://beplhhyfw3vj"]
 
 [ext_resource type="Script" path="res://rpcTest.gd" id="1_tmxdc"]
 [ext_resource type="Script" path="res://Client.gd" id="1_x0fgo"]
-[ext_resource type="PackedScene" uid="uid://drmhgulvvkskv" path="res://nodes/panel.tscn" id="3_7uer2"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -16,43 +15,59 @@ script = ExtResource("1_tmxdc")
 [node name="Client" type="Node" parent="."]
 script = ExtResource("1_x0fgo")
 
-[node name="LineEdit" type="LineEdit" parent="Client"]
-offset_left = 26.0
-offset_top = 119.0
-offset_right = 297.0
-offset_bottom = 158.0
-
-[node name="SendPacket" type="Button" parent="."]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 72.0
-offset_right = 196.0
-offset_bottom = 111.0
-text = "Send Test Packet"
-
-[node name="StartClient" type="Button" parent="."]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 22.0
-offset_right = 196.0
-offset_bottom = 61.0
-text = "Start Client"
-
-[node name="JoinLobby" type="Button" parent="."]
-layout_mode = 0
-offset_left = 305.0
-offset_top = 121.0
-offset_right = 418.0
-offset_bottom = 160.0
-text = "Join Lobby"
-
-[node name="Panel" parent="." instance=ExtResource("3_7uer2")]
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
+[node name="LobbySelect" type="Control" parent="Client"]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[connection signal="pressed" from="SendPacket" to="Client" method="_on_send_packet_pressed"]
-[connection signal="pressed" from="StartClient" to="Client" method="_on_start_client_pressed"]
-[connection signal="pressed" from="JoinLobby" to="Client" method="_on_join_lobby_pressed"]
+[node name="Name" type="LineEdit" parent="Client/LobbySelect"]
+layout_mode = 0
+offset_left = 334.0
+offset_top = 217.0
+offset_right = 780.0
+offset_bottom = 256.0
+placeholder_text = "Name"
+alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="Client/LobbySelect"]
+layout_mode = 0
+offset_left = 333.0
+offset_top = 311.0
+offset_right = 655.0
+offset_bottom = 350.0
+placeholder_text = "Lobby Code"
+
+[node name="JoinLobby2" type="Button" parent="Client/LobbySelect"]
+layout_mode = 0
+offset_left = 335.0
+offset_top = 264.0
+offset_right = 778.0
+offset_bottom = 303.0
+text = "Create Lobby"
+
+[node name="JoinLobby" type="Button" parent="Client/LobbySelect"]
+layout_mode = 0
+offset_left = 668.0
+offset_top = 311.0
+offset_right = 781.0
+offset_bottom = 350.0
+text = "Join Lobby"
+
+[node name="Lobby" type="Control" parent="Client"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="Client/Lobby"]
+layout_mode = 0
+offset_left = 486.0
+offset_top = 275.0
+offset_right = 640.0
+offset_bottom = 329.0
+text = "Start Game"
+
+[connection signal="pressed" from="Client/LobbySelect/JoinLobby2" to="Client" method="_on_join_lobby_2_pressed"]
+[connection signal="pressed" from="Client/LobbySelect/JoinLobby" to="Client" method="_on_join_lobby_pressed"]

@@ -9,9 +9,11 @@ enum Message{
 	candidate,
 	offer,
 	answer,
-	checkIn
+	removeLobby,
+	checkIn,
+	error,
+	switchHost
 }
-
 var peer : WebSocketMultiplayerPeer = WebSocketMultiplayerPeer.new()
 var myId : int = 0
 var rtcPeer : WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new()
@@ -22,6 +24,8 @@ func _ready():
 	multiplayer.connected_to_server.connect(RTCServerConnected)
 	multiplayer.peer_connected.connect(RTCPeerConnected)
 	multiplayer.peer_disconnected.connect(RTCPeerDisconnected)
+	#connectToServer("ws://104.248.47.16:8915")
+	connectToServer("ws://127.0.0.1:8915")
 	pass # Replace with function body.
 
 func RTCServerConnected():
@@ -47,12 +51,17 @@ func _process(delta):
 			if data.message == Message.userConnected:
 				print("user connected " + str(myId) + " " + str(data.id))
 				createPeer(data.id)
+			if data.message == Message.switchHost:
+				print("Switch Host")
+				switchHost(data.host, data.players)
+			if data.message == Message.error:
+				print("Error " + data.error)
 			if data.message == Message.lobby:
 				lobbyValue = data.lobbyValue
 				hostId = data.host
 				print(data.players)
 				print(data.lobbyValue)
-				$LineEdit.text = data.lobbyValue
+				$LobbySelect/LineEdit.text = data.lobbyValue
 			if data.message == Message.candidate:
 				if rtcPeer.has_peer(data.orgPeer):
 					print("Got Candidate: " + str(data.orgPeer) + " my id is " + str(myId))
@@ -64,11 +73,28 @@ func _process(delta):
 			if data.message == Message.answer:
 				if rtcPeer.has_peer(data.orgPeer):
 					rtcPeer.get_peer(data.orgPeer).connection.set_remote_description("answer", data.data)
+			if data.message == Message.candidate:
+				if rtcPeer.has_peer(data.orgPeer):
+					print("Got Candidate: " + str(data.orgPeer) + " my id is " + str(myId))
+					rtcPeer.get_peer(data.orgPeer).connection.add_ice_candidate(data.mid,data.index,data.sdp)
 	pass
 	
 func connected(id):
 	rtcPeer.create_mesh(id)
 	multiplayer.multiplayer_peer = rtcPeer
+	
+func switchHost(id, players):
+	var peers = rtcPeer.get_peers()
+	for peerID in peers:
+		rtcPeer.remove_peer(peerID)
+		
+	hostId = id
+	print(players)
+	var playerObjs = JSON.parse_string(players)
+	for playerId in playerObjs.keys():
+		print(playerId)
+		createPeer(int(playerId))
+	
 	
 func createPeer(id):
 	if id != self.myId:
@@ -136,20 +162,12 @@ func iceCandidateCreated(midName, indexName, sdpName, id):
 	pass
 	
 func connectToServer(ip):
-	peer.create_client("ws://104.248.47.16:8915")
+	peer.create_client(ip)
 	print("client started")
 	pass
 
 
 
-func _on_start_client_pressed():
-	connectToServer("")
-	pass # Replace with function body.
-
-
-func _on_send_packet_pressed():
-	ping.rpc()
-	pass
 	
 @rpc("any_peer")
 func ping():
@@ -161,8 +179,20 @@ func _on_join_lobby_pressed():
 	var message = {
 		"id" : myId,
 		"message" : Message.lobby,
-		"lobbyValue" : $LineEdit.text,
-		"name" : "PlayerName"
+		"lobbyValue" : $LobbySelect/LineEdit.text,
+		"name" : $LobbySelect/Name.text
+	}
+	var messageBytes = JSON.stringify(message).to_utf8_buffer()
+	peer.put_packet(messageBytes)
+	pass # Replace with function body.
+
+
+func _on_join_lobby_2_pressed():
+	var message = {
+		"id" : myId,
+		"message" : Message.lobby,
+		"lobbyValue" : "",
+		"name" : $LobbySelect/Name.text
 	}
 	var messageBytes = JSON.stringify(message).to_utf8_buffer()
 	peer.put_packet(messageBytes)
