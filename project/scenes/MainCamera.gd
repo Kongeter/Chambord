@@ -22,8 +22,7 @@ func _input(event):
 func get_selection(mouse):
 	var worldspace = get_world_3d().direct_space_state
 	var start = project_ray_origin(mouse)
-	var end = Vector3(project_ray_origin(mouse).x,-100,project_ray_origin(mouse).z)
-	end = project_position(mouse, 1000)
+	var end = project_position(mouse, 1000)
 	var result = worldspace.intersect_ray(PhysicsRayQueryParameters3D.create(start, end))
 	if result:
 		previewTileClicked.emit(result.position[0],result.position[2])

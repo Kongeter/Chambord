@@ -1,6 +1,5 @@
 [gd_scene load_steps=9 format=3 uid="uid://baljr1c4vpbe8"]
 
-[ext_resource type="PackedScene" uid="uid://d2j335s0qy3jy" path="res://assets/Table.tscn" id="1_2i8qo"]
 [ext_resource type="Script" path="res://GameController.gd" id="1_5o2de"]
 [ext_resource type="Script" path="res://scenes/mainScene.gd" id="1_6ri7u"]
 [ext_resource type="Script" path="res://scenes/MainCamera.gd" id="3_r5ulx"]
@@ -47,14 +46,10 @@ transform = Transform3D(0.7884, -0.506226, 0.349514, -0.518498, -0.241093, 0.820
 light_energy = 2.939
 shadow_enabled = true
 
-[node name="Table" parent="." instance=ExtResource("1_2i8qo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
-
 [node name="GameField" type="Node3D" parent="."]
 unique_name_in_owner = true
 editor_description = "Spielfeld"
 script = ExtResource("4_4m6m6")
-visible = false
 
 [node name="GameController" type="Node" parent="."]
 script = ExtResource("1_5o2de")

@@ -30,6 +30,7 @@ func showPossiblePlaces(possiblePlaces: Array):
 		instance.position.z = 2 * coord.yCoord+1
 		previewCardElements.append(instance)
 		add_child(instance)
+		print("hello",instance)
 
 func removePossiblePlaces():
 	for previewCard in previewCardElements:
