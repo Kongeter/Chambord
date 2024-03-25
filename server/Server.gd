@@ -73,8 +73,18 @@ func disconnectFromLobby(userId):
 			lobbies.erase(lobbyId)
 			print("lobby erased")
 			return
-		if lobbies[lobbyId].HostID == userId:
-			transferHost(lobbyId)
+		else:
+			if lobbies[lobbyId].HostID == userId:
+				transferHost(lobbyId)
+			for p in lobbies[lobbyId].Players:
+				var lobbyData = {
+					"message" : Message.lobby,
+					"players" : JSON.stringify(lobbies[lobbyId].Players),
+					"host" : lobbies[lobbyId].HostID,
+					"lobbyValue" : lobbyId
+				}
+				sendToPlayer(p, lobbyData)
+		
 
 func transferHost(lobbyId):
 	print("host transfer")
