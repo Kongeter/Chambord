@@ -1,10 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://d1oowpmpl67p7"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y17si"]
-albedo_color = Color(0.537255, 0.258824, 0, 1)
+[ext_resource type="Material" uid="uid://dundxdmxflen" path="res://materials/City.tres" id="1_0jixp"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_f5qng"]
-material = SubResource("StandardMaterial3D_y17si")
+[sub_resource type="BoxMesh" id="BoxMesh_5xd0x"]
 
-[node name="MeshInstance3D" type="MeshInstance3D"]
-mesh = SubResource("PlaneMesh_f5qng")
+[node name="MeshInstance3D" type="Node3D"]
+
+[node name="Plane" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 8.6679, 0, 0, 0, 2, 0, -4.273, 0)
+material_override = ExtResource("1_0jixp")
+mesh = SubResource("BoxMesh_5xd0x")
