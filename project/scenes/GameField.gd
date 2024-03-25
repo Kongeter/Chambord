@@ -6,7 +6,7 @@ func tileChooser(type: String, possiblePlaces:Array):
 	showPossiblePlaces(possiblePlaces)
 	await Signal(get_node("%Camera3D"), "previewTileClicked")
 	removePossiblePlaces()
-	return [xClicked, yClicked]
+	return Vector2(xClicked, yClicked)
 
 func _on_camera_3d_preview_tile_clicked(x, y):
 	xClicked = int(floor(x/ 2))  

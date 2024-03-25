@@ -1,6 +1,7 @@
 extends Node
 
 @onready var lobby = $Lobby
+var mainScene = preload("res://scenes/mainScene.tscn").instantiate()
 
 enum Message{
 	id,
@@ -175,6 +176,15 @@ func ping():
 	print("ping from " + str(multiplayer.get_remote_sender_id()) + " I am " + str(myId) + " btw")
 	pass
 
+@rpc("any_peer","call_local")
+func switchScene():
+	remove_child($Lobby)
+	get_tree().root.add_child(mainScene)
+
+func startGame():
+	switchScene.rpc()
+	pass
+
 func getPlayerNames(players):
 	var playerNames : Array = []
 	for p in players:
@@ -203,4 +213,10 @@ func _on_lobby_join_lobby(playerName, lobbyId):
 	}
 	var messageBytes = JSON.stringify(message).to_utf8_buffer()
 	peer.put_packet(messageBytes)
+	pass # Replace with function body.
+
+
+
+func _on_start_game_pressed():
+	startGame()
 	pass # Replace with function body.

@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://beplhhyfw3vj"]
+[gd_scene load_steps=3 format=3 uid="uid://beplhhyfw3vj"]
 
-[ext_resource type="Script" path="res://rpcTest.gd" id="1_tmxdc"]
 [ext_resource type="Script" path="res://Client.gd" id="1_x0fgo"]
 [ext_resource type="Script" path="res://scenes/Lobby.gd" id="3_88bn1"]
 
@@ -11,7 +10,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_tmxdc")
 
 [node name="Client" type="Node" parent="."]
 script = ExtResource("1_x0fgo")
@@ -105,4 +103,5 @@ alignment = 1
 [connection signal="joinLobby" from="Client/Lobby" to="Client" method="_on_lobby_join_lobby"]
 [connection signal="pressed" from="Client/Lobby/LobbySelect/CreateLobby" to="Client/Lobby" method="_on_create_lobby_pressed"]
 [connection signal="pressed" from="Client/Lobby/LobbySelect/JoinLobby" to="Client/Lobby" method="_on_join_lobby_pressed"]
+[connection signal="pressed" from="Client/Lobby/LobbyMenu/StartGame" to="Client" method="_on_start_game_pressed"]
 [connection signal="pressed" from="Client/Lobby/LobbyMenu/LobbyId" to="Client/Lobby" method="_on_lobby_id_pressed"]
