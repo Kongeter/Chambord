@@ -20,7 +20,7 @@ func playGame():
 @rpc("any_peer","call_local")
 func placeTile(tilePos, rotation, tileType):
 	GameField.placeTile(tilePos.x,tilePos.y,0,tileType)
-	var newcard = Card.new(1,1,3,3,0,0)#TODO save the correct card
+	var newcard = Card.new(tilePos.x,tilePos.y,3,3,0,0)#TODO save the correct card
 	placedCards.append(newcard)
 
 func tileSelection(player: int):
