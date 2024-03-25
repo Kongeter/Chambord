@@ -41,6 +41,13 @@ script = ExtResource("1_6ri7u")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_q0htv")
 
+[node name="TileLabel" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 575.0
+offset_top = 582.0
+offset_right = 590.0
+offset_bottom = 605.0
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.7884, -0.506226, 0.349514, -0.518498, -0.241093, 0.820386, -0.331036, -0.828015, -0.452555, 0, 17.1043, 0)
 light_energy = 2.939
@@ -61,11 +68,11 @@ environment = SubResource("Environment_c45s4")
 current = true
 script = ExtResource("3_r5ulx")
 
-[node name="TileLabel" type="Label" parent="."]
+[node name="TileRotLabel" type="Label" parent="."]
 unique_name_in_owner = true
-offset_left = 431.0
-offset_top = 477.0
-offset_right = 551.0
-offset_bottom = 531.0
+offset_left = 552.0
+offset_top = 582.0
+offset_right = 567.0
+offset_bottom = 605.0
 
 [connection signal="previewTileClicked" from="Camera3D" to="GameField" method="_on_camera_3d_preview_tile_clicked"]

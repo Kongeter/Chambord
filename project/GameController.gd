@@ -1,7 +1,7 @@
 extends Node
 
 
-var placedCards = [Card.new(0,0,3,0,0,0)]
+var placedCards = [Card.new(0,0,"D",0,0,0)]
 var GameField
 var tileStack
 var rng = RandomNumberGenerator.new()
@@ -10,7 +10,7 @@ var rng = RandomNumberGenerator.new()
 func _ready():
 	GameField = get_node("%GameField")
 	GameField.placeTile(0,0,0,"D")
-	tileStack = ["A","B","C","D","E","F"]
+	tileStack = ["A"]
 	playGame()
 
 func playGame():
@@ -18,16 +18,16 @@ func playGame():
 		await tileSelection(0)
 
 @rpc("any_peer","call_local")
-func placeTile(tilePos, rotation, tileType):
-	GameField.placeTile(tilePos.x,tilePos.y,0,tileType)
-	var newcard = Card.new(tilePos.x,tilePos.y,3,3,0,0)#TODO save the correct card
+func placeTile(tilePosAndRotation, tileType):
+	GameField.placeTile(tilePosAndRotation[0],tilePosAndRotation[1],tilePosAndRotation[2],tileType)
+	var newcard = Card.new(tilePosAndRotation[0],tilePosAndRotation[1],tileType,tilePosAndRotation[2],0,0)#TODO save the correct card
 	placedCards.append(newcard)
 
 func tileSelection(player: int):
 	var tileType = tileStack.pick_random()#TODO remove choosen tile
 	var legitPlaces = getLegitPlaces()
-	var klickedTileCoords = await GameField.tileChooser(tileType, legitPlaces)
-	placeTile.rpc(klickedTileCoords, 0, tileType)
+	var klickedTileCoordsAndRotation = await GameField.tileChooser(tileType, legitPlaces)
+	placeTile.rpc(klickedTileCoordsAndRotation, tileType)
 	return
 	
 func getLegitPlaces():

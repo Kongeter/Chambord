@@ -3,12 +3,12 @@ class_name Card
 
 var xCoord : int
 var yCoord : int
-var type : int
+var type : String
 var rotation : int
 var figureType : int
 var figurePos : int
 
-func _init(x_val, y_val, type_val: int, rotation_val: int,  figureType_val: int, figurePos_val: int) -> void:
+func _init(x_val, y_val, type_val: String, rotation_val: int,  figureType_val: int, figurePos_val: int) -> void:
 	rotation = rotation_val
 	type = type_val
 	figureType = figureType_val
