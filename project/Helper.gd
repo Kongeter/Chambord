@@ -12,3 +12,9 @@ static func functionFindFirstObject(a: Array, f: Callable) -> int:
 		if f.call(a[i]):
 			return a[i]
 	return -1
+
+static func arrayHas(array: Array, f: Callable) -> bool:
+	for element in array:
+		if f.call(element):
+			return true
+	return false

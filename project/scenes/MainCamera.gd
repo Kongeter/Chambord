@@ -2,11 +2,9 @@ extends Camera3D
 
 const zoomSpeed = 2
 const moveSpeed = 0.8
+const minHeight = 5
 
 signal previewTileClicked(x,y)
-
-func _ready():
-	pass
 
 func _process(delta):
 	controlls(delta)
@@ -29,17 +27,21 @@ func get_selection(mouse):
 
 func _unhandled_input(event):
 	if event.is_action_pressed("cam_zoom_in"):
-		position.y -= zoomSpeed
+		position.y = max(position.y-zoomSpeed,minHeight)
 	if event.is_action_pressed("cam_zoom_out"):
-		position.y += zoomSpeed
+		position.y = position.y+zoomSpeed
 
 func controlls(delta):
 	if Input.is_action_pressed("cam_down"):
 		position.z += moveSpeed
+		position.x += moveSpeed
 	if Input.is_action_pressed("cam_up"):
 		position.z -= moveSpeed
+		position.x -= moveSpeed
 	if Input.is_action_pressed("cam_left"):
 		position.x -= moveSpeed
+		position.z += moveSpeed
 	if Input.is_action_pressed("cam_right"):
 		position.x += moveSpeed
+		position.z -= moveSpeed
 
