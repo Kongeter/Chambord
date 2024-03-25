@@ -1,5 +1,8 @@
 extends Node
 
+@onready var lobby = $Lobby
+var mainScene = preload("res://scenes/mainScene.tscn").instantiate()
+
 enum Message{
 	id,
 	join,
@@ -59,9 +62,10 @@ func _process(delta):
 			if data.message == Message.lobby:
 				lobbyValue = data.lobbyValue
 				hostId = data.host
-				print(data.players)
+				var players = JSON.parse_string(data.players) 
 				print(data.lobbyValue)
-				$LobbySelect/LineEdit.text = data.lobbyValue
+				lobby.showLobby(data.lobbyValue, hostId == myId)
+				lobby.showPlayers(getPlayerNames(players))
 			if data.message == Message.candidate:
 				if rtcPeer.has_peer(data.orgPeer):
 					print("Got Candidate: " + str(data.orgPeer) + " my id is " + str(myId))
@@ -89,8 +93,8 @@ func switchHost(id, players):
 		rtcPeer.remove_peer(peerID)
 		
 	hostId = id
-	print(players)
 	var playerObjs = JSON.parse_string(players)
+	lobby.showPlayers(getPlayerNames(playerObjs))
 	for playerId in playerObjs.keys():
 		print(playerId)
 		createPeer(int(playerId))
@@ -167,33 +171,52 @@ func connectToServer(ip):
 	pass
 
 
-
-	
 @rpc("any_peer")
 func ping():
 	print("ping from " + str(multiplayer.get_remote_sender_id()) + " I am " + str(myId) + " btw")
 	pass
 
+@rpc("any_peer","call_local")
+func switchScene():
+	remove_child($Lobby)
+	get_tree().root.add_child(mainScene)
 
-func _on_join_lobby_pressed():
+func startGame():
+	switchScene.rpc()
+	pass
+
+func getPlayerNames(players):
+	var playerNames : Array = []
+	for p in players:
+		playerNames.append(players[p].name)
+	return playerNames
+
+
+func _on_lobby_create_lobby(playerName):
 	var message = {
 		"id" : myId,
 		"message" : Message.lobby,
-		"lobbyValue" : $LobbySelect/LineEdit.text,
-		"name" : $LobbySelect/Name.text
+		"lobbyValue" : "",
+		"name" : playerName
 	}
 	var messageBytes = JSON.stringify(message).to_utf8_buffer()
 	peer.put_packet(messageBytes)
 	pass # Replace with function body.
 
 
-func _on_join_lobby_2_pressed():
+func _on_lobby_join_lobby(playerName, lobbyId):
 	var message = {
 		"id" : myId,
 		"message" : Message.lobby,
-		"lobbyValue" : "",
-		"name" : $LobbySelect/Name.text
+		"lobbyValue" : lobbyId,
+		"name" : playerName
 	}
 	var messageBytes = JSON.stringify(message).to_utf8_buffer()
 	peer.put_packet(messageBytes)
+	pass # Replace with function body.
+
+
+
+func _on_start_game_pressed():
+	startGame()
 	pass # Replace with function body.

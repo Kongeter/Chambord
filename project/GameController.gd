@@ -2,7 +2,7 @@ extends Node
 
 
 var placedCards = [Card.new(0,0,3,0,0,0)]
-var GameField 
+var GameField
 var tileStack
 var rng = RandomNumberGenerator.new()
 
@@ -17,13 +17,17 @@ func playGame():
 	while(true):
 		await tileSelection(0)
 
+@rpc("any_peer","call_local")
+func placeTile(tilePos, rotation, tileType):
+	GameField.placeTile(tilePos.x,tilePos.y,0,tileType)
+	var newcard = Card.new(1,1,3,3,0,0)#TODO save the correct card
+	placedCards.append(newcard)
+
 func tileSelection(player: int):
 	var tileType = tileStack.pick_random()#TODO remove choosen tile
 	var legitPlaces = getLegitPlaces()
 	var klickedTileCoords = await GameField.tileChooser(tileType, legitPlaces)
-	GameField.placeTile(klickedTileCoords[0],klickedTileCoords[1],0,tileType)
-	var newcard = Card.new(klickedTileCoords[0],klickedTileCoords[1],3,3,0,0)#TODO save the correct card
-	placedCards.append(newcard)
+	placeTile.rpc(klickedTileCoords, 0, tileType)
 	return
 	
 func getLegitPlaces():
@@ -35,9 +39,9 @@ func getLegitPlaces():
 			var newY= card.yCoord+dir[1]
 			if !Helper.arrayHas(possiblePlaces, func(c): return c.equals(newX, newY)) and !Helper.arrayHas(placedCards, func(c): return (c.xCoord == newX and c.yCoord == newY)):
 				possiblePlaces.append(Coord.new(newX,newY))
-		
-		
-	
+
+
+
 	return possiblePlaces
 	
 func _process(delta):
