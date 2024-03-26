@@ -16,7 +16,8 @@ static func showBoard(cards: Array, xMax, yMax) -> void:
 	var divider = "-"
 	for i in range(xMax):
 		divider += "---" 
-	for y in range (yMax):
+	for y_ in range (yMax):
+		var y = yMax - y_ -1
 		print(divider)
 		var stringTop = "|"
 		var stringBottom = "|"

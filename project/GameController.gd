@@ -13,17 +13,18 @@ func testing():
 	
 	
 func _ready():
-	await testing();
+	#testing();
 	GameField = get_node("%GameField")
 	GameField.placeTile(StartCard.xCoord,StartCard.yCoord,StartCard.rotation,StartCard.type)
-	#tileStack = ["A","B","C","D","E","F"]
-	tileStack = ["A"]
+	tileStack = ["A","B","C","D","E","F"]
+	#tileStack = ["A"]
 	playGame()
 
 func playGame():
 	while(true):
-		await turn(0)
 		DebugHelper.showBoard(placedCards ,6,6)
+		await turn(0)
+		
 		
 @rpc("any_peer","call_local")
 func placeTile(tilePosAndRotation, tileType):

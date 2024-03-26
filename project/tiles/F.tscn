@@ -27,6 +27,7 @@ size = Vector2(1.2, 2)
 subdivide_width = 1
 
 [node name="MeshInstance3D" type="Node3D"]
+transform = Transform3D(-0.000174566, 0, 1, 0, 1, 0, -1, 0, -0.000174566, 0, 0, 0)
 
 [node name="Wall" parent="." instance=ExtResource("2_1bfti")]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dxvyiikx2vljg"]
 
 [ext_resource type="PackedScene" uid="uid://dvfr8j3njiywm" path="res://assets/grass.tscn" id="2_8pjat"]
-[ext_resource type="PackedScene" uid="uid://bvpytvylfh02q" path="res://assets/church.tscn" id="2_eqllw"]
+[ext_resource type="PackedScene" path="res://assets/church.tscn" id="2_eqllw"]
 
 [node name="MeshInstance3D" type="Node3D"]
 
