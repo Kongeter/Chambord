@@ -9,7 +9,7 @@ static func functionFindFirstIndex(a: Array, f: Callable) -> int:
 	return -1
 
 #returns the fist Object in "array" which fulfills Funktion "f"
-static func functionFindFirstObject(array: Array, f: Callable) -> int:
+static func functionFindFirstObject(array: Array, f: Callable):
 	for i in range(array.size()):
 		if f.call(array[i]):
 			return array[i]

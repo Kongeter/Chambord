@@ -6,7 +6,18 @@ func _process(delta):
 var tileRotation
 var xClicked
 var yClicked
-var CardTypesInitiated_ = CardTypesInitiated.new()
+var ValidPositions_G
+
+func tileChooserV2(type: String, ValidPositions:Array):
+	ValidPositions_G = ValidPositions
+	$%TileLabel.text = type
+	tileRotation = 0
+	showPossiblePlaces(ValidPositions.filter(func(p):return p[2]==0).map(func(p):return Coord.new(p[0],p[1])))
+	#print(ValidPositions.filter(func(p):return p[2]==0).map(func(p):return "set: " + str(p[0]) + " " + str(p[1])))
+	await Signal(get_node("%Camera3D"), "previewTileClicked")
+	removePossiblePlaces()
+	return [xClicked, yClicked, tileRotation]
+
 
 func tileChooser(type: String, possiblePlaces:Array):
 	$%TileLabel.text = type
@@ -26,17 +37,19 @@ func placeTile(x,y,tileRotation_,type):
 	var instance = scene.instantiate()
 	instance.position.x = 2*x+1
 	instance.position.z = 2*y+1
-	instance.rotate_y(-deg_to_rad(90.0)*tileRotation_)
+	instance.rotate_y(-deg_to_rad(90.0)*(tileRotation_+3))
 	add_child(instance)
 
 var previewCardElements:Array
 func showPossiblePlaces(possiblePlaces: Array):
+	
 	for coord:Coord in possiblePlaces:
 		var scene = load("res://tiles/previewCard.tscn")
 		var instance = scene.instantiate()
 		instance.position.x = 2 * coord.xCoord +1
 		instance.position.z = 2 * coord.yCoord+1
 		previewCardElements.append(instance)
+		print(coord.xCoord, " " ,coord.yCoord)
 		add_child(instance)
 
 func removePossiblePlaces():
@@ -46,23 +59,17 @@ func removePossiblePlaces():
 	
 func controlls(delta):
 	if Input.is_action_just_pressed("rotate_tile_left"):
-		tileRotation = (tileRotation - 1)%4
+		tileRotation = (tileRotation + 3)%4
+		removePossiblePlaces()
+		showPossiblePlaces(ValidPositions_G.filter(func(p):return p[2]==tileRotation).map(func(p):return Coord.new(p[0],p[1])))
 	if Input.is_action_just_pressed("rotate_tile_right"):
 		tileRotation = (tileRotation + 1)%4
+		removePossiblePlaces()
+		showPossiblePlaces(ValidPositions_G.filter(func(p):return p[2]==tileRotation).map(func(p):return Coord.new(p[0],p[1])))
 	$%TileRotLabel.text = str(tileRotation)
+	
 
-#calculates the type of Edge (0=grass, 1=street, 2=city) from any given card
-func calcEdgeType(card: Card):
-	var res = []
-	var index = Helper.getIndexFromLetter(card.type);
-	var streetsFlattend = Helper.flatten(CardTypesInitiated_.cards[index].connectGroupsStreets)
-	var cityFlattend = Helper.flatten(CardTypesInitiated_.cards[index].connectGroupsCitys)
-	for side: int in range(0,4):
-		if streetsFlattend.has(side):
-			res.append(1)
-		elif cityFlattend.has(side):
-			res.append(2)
-		else:
-			res.append(0)
-	return res
+	
+
+
 

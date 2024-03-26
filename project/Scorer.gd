@@ -1,14 +1,22 @@
 extends Node
 class_name Scorer
 
+
+
+
+	
+
+
+
 #bekommt Koordinate von Karte + Richtung (0 oben dann im Uhrzeigersinn)
 #Gibt dann Array zurück von: (Koordinate, Richtung) die man durch die Straße erreichen kann (wobei richtung dann die richtung ist mit der man bei der neuen Karte ankommt)
 static func getStreetOrCityConnection(card: Card, direction: int, street: bool) ->Array:
+	var Defintions = CardTypesInitiated.new()
 	var groups
 	if street:
-		groups = CardDefintions.connectGroupsStreets[card.type]
+		groups = Defintions.cards[card.type].connectGroupsStreets
 	else: 
-		groups = CardDefintions.connectGroupsCitys[card.type]
+		groups = Defintions.cards[card.type].connectGroupsCitys
 		
 	var groupsRotated = groups.map(func(x): return x.map(func(y): return (y + card.rotation) % 4))
 	
@@ -44,7 +52,8 @@ static func getStreetOrCityConnection(card: Card, direction: int, street: bool) 
 #bekommt Koordinate von Karte + Richtung (0 oben links, 1 oben rechts, dann im Uhrzeigersinn)
 #Gibt dann Array zurück von: (Koordinate, Richtung) die man durch die Wiese erreichen kann (wobei richtung dann die richtung ist mit der man bei der neuen Karte ankommt)
 static func getGrassConnection(card: Card, direction: int) ->Array:
-	var groups = CardDefintions.connectGroupsGrass[card.type]
+	var Defintions = CardTypesInitiated.new()
+	var groups = Defintions.cards[card.type].connectGroupsGrass
 		
 	var groupsRotated = groups.map(func(x): return x.map(func(y): return (y + card.rotation*2) % 8))
 	
