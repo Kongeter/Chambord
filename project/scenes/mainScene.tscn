@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://baljr1c4vpbe8"]
+[gd_scene load_steps=10 format=3 uid="uid://baljr1c4vpbe8"]
 
 [ext_resource type="Script" path="res://GameController.gd" id="1_5o2de"]
 [ext_resource type="Script" path="res://scenes/mainScene.gd" id="1_6ri7u"]
 [ext_resource type="Script" path="res://scenes/MainCamera.gd" id="3_r5ulx"]
 [ext_resource type="Script" path="res://scenes/GameField.gd" id="4_4m6m6"]
 [ext_resource type="Shader" path="res://shaders/fog.gdshader" id="5_6e7bt"]
+[ext_resource type="Script" path="res://FPS.gd" id="6_euirt"]
 
 [sub_resource type="Environment" id="Environment_c45s4"]
 background_mode = 1
@@ -75,5 +76,13 @@ offset_left = 552.0
 offset_top = 582.0
 offset_right = 567.0
 offset_bottom = 605.0
+
+[node name="FPS" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 13.0
+offset_top = 16.0
+offset_right = 28.0
+offset_bottom = 39.0
+script = ExtResource("6_euirt")
 
 [connection signal="previewTileClicked" from="Camera3D" to="GameField" method="_on_camera_3d_preview_tile_clicked"]
