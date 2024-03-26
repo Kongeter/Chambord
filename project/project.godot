@@ -65,4 +65,5 @@ rotate_tile_right={
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+anti_aliasing/quality/use_debanding=true

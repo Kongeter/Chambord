@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3lxgmn13hcp5"]
+[gd_scene load_steps=5 format=3 uid="uid://c3lxgmn13hcp5"]
 
-[ext_resource type="Material" uid="uid://cdfq4y4ol2o5r" path="res://materials/grass.tres" id="1_meyis"]
+[ext_resource type="PackedScene" uid="uid://dvfr8j3njiywm" path="res://assets/grass.tscn" id="1_4k3rh"]
 [ext_resource type="PackedScene" uid="uid://bvpytvylfh02q" path="res://assets/church.tscn" id="2_wxdki"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_163ek"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nxoa7"]
 albedo_color = Color(0.72549, 0.560784, 0.341176, 1)
@@ -13,10 +11,7 @@ material = SubResource("StandardMaterial3D_nxoa7")
 
 [node name="MeshInstance3D" type="Node3D"]
 
-[node name="Plane" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 8.6679, 0, 0, 0, 2, 0, -4.30696, 0)
-material_override = ExtResource("1_meyis")
-mesh = SubResource("BoxMesh_163ek")
+[node name="grass" parent="." instance=ExtResource("1_4k3rh")]
 
 [node name="Church" parent="." instance=ExtResource("2_wxdki")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
