@@ -49,14 +49,17 @@ func mouseHandler(delta):
 		#if event.button_index == MOUSE_BUTTON_LEFT:
 			#get_selection(mouse)
 func moveCamera(curMousePos, startMousePos):
-	var b = get_y_plane_intersection(curMousePos)
-	var a = get_y_plane_intersection(startMousePos)
+	var b = local_cam_space(get_x_z_plane_intersection(curMousePos))
+	var a = local_cam_space(get_x_z_plane_intersection(startMousePos))
 	var dif = a-b
 	targetPosition.x = startCamPos.x + dif.x
 	targetPosition.z = startCamPos.z + dif.y
 	pass
 
-func get_y_plane_intersection(mouse) -> Vector2:
+
+func local_cam_space(v):
+	return Vector2(v.x - position.x, v.y-position.z)
+func get_x_z_plane_intersection(mouse) -> Vector2:
 	var start = project_ray_origin(mouse)
 	var end = project_position(mouse, 1000)
 	var dir = end-start
@@ -64,16 +67,13 @@ func get_y_plane_intersection(mouse) -> Vector2:
 	
 	var t = -start.y/dir.y
 	var point = start + t*dir
-	return Vector2(point.x - position.x, point.z-position.z)
+	return Vector2(point.x,point.z)
 	
 	
 func get_selection(mouse):
-	var worldspace = get_world_3d().direct_space_state
-	var start = project_ray_origin(mouse)
-	var end = project_position(mouse, 1000)
-	var result = worldspace.intersect_ray(PhysicsRayQueryParameters3D.create(start, end))
+	var result = get_x_z_plane_intersection(mouse)
 	if result:
-		previewTileClicked.emit(result.position[0],result.position[2])
+		previewTileClicked.emit(result.x,result.y)
 
 func _unhandled_input(event):
 	if event.is_action_pressed("cam_zoom_in"):
