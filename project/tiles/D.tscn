@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0yu5cee50l3l"]
+[gd_scene load_steps=6 format=3 uid="uid://b0yu5cee50l3l"]
 
-[ext_resource type="Material" uid="uid://cdfq4y4ol2o5r" path="res://materials/grass.tres" id="1_butq0"]
 [ext_resource type="PackedScene" uid="uid://mxo8kk20vkyr" path="res://assets/city_floor.tscn" id="2_i2fm0"]
 [ext_resource type="PackedScene" uid="uid://duk2rrxv38n14" path="res://assets/wall.tscn" id="3_qsugx"]
+[ext_resource type="PackedScene" uid="uid://dvfr8j3njiywm" path="res://assets/grass.tscn" id="3_r04d0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pgjhh"]
 albedo_color = Color(0.72549, 0.560784, 0.341176, 1)
@@ -10,19 +10,14 @@ albedo_color = Color(0.72549, 0.560784, 0.341176, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_6ho4n"]
 material = SubResource("StandardMaterial3D_pgjhh")
 
-[sub_resource type="BoxMesh" id="BoxMesh_uhv5k"]
-
 [node name="MeshInstance3D" type="Node3D"]
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.1, 0, 0, 0, 0.085, 0, 0, 0, 0.2, 0, 0.0468859, 0)
 mesh = SubResource("BoxMesh_6ho4n")
 
-[node name="Plane" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 8.6679, 0, 0, 0, 2, 0, -4.30696, 0)
-material_override = ExtResource("1_butq0")
-mesh = SubResource("BoxMesh_uhv5k")
-
 [node name="CityFloor" parent="." instance=ExtResource("2_i2fm0")]
 
 [node name="Wall" parent="." instance=ExtResource("3_qsugx")]
+
+[node name="grass" parent="." instance=ExtResource("3_r04d0")]

@@ -4,19 +4,7 @@
 [ext_resource type="Script" path="res://scenes/mainScene.gd" id="1_6ri7u"]
 [ext_resource type="Script" path="res://scenes/MainCamera.gd" id="3_r5ulx"]
 [ext_resource type="Script" path="res://scenes/GameField.gd" id="4_4m6m6"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1oc0p"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_dajml"]
-sky_material = SubResource("ProceduralSkyMaterial_1oc0p")
-
-[sub_resource type="Environment" id="Environment_q0htv"]
-background_mode = 2
-sky = SubResource("Sky_dajml")
-tonemap_mode = 2
-glow_enabled = true
+[ext_resource type="Shader" path="res://shaders/fog.gdshader" id="5_6e7bt"]
 
 [sub_resource type="Environment" id="Environment_c45s4"]
 background_mode = 1
@@ -26,7 +14,6 @@ ambient_light_color = Color(0.435294, 0.592157, 0.701961, 1)
 ssao_radius = 15.76
 ssao_intensity = 16.0
 ssao_ao_channel_affect = 0.6
-fog_enabled = true
 fog_light_color = Color(0.0627451, 0.109804, 0.14902, 1)
 fog_light_energy = 1.22
 fog_density = 0.0
@@ -34,12 +21,22 @@ fog_sky_affect = 0.5
 fog_height_density = 2.0105
 adjustment_brightness = 1.59
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0hor6"]
+render_priority = -128
+shader = ExtResource("5_6e7bt")
+shader_parameter/color1 = Color(0.0392157, 0.0862745, 0.129412, 1)
+shader_parameter/color2 = Color(0.109804, 0.192157, 0.247059, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_q4qj6"]
+material = SubResource("ShaderMaterial_0hor6")
+size = Vector2(2, 2)
+
 [node name="Node3D" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.074028, -0.0660019, 0.0475349)
 script = ExtResource("1_6ri7u")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_q0htv")
+environment = SubResource("Environment_c45s4")
 
 [node name="TileLabel" type="Label" parent="."]
 unique_name_in_owner = true
@@ -63,10 +60,14 @@ script = ExtResource("1_5o2de")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(0.707107, -0.664463, 0.241845, 0, 0.34202, 0.939693, -0.707107, -0.664463, 0.241845, 0.53, 6.96479, 9)
-environment = SubResource("Environment_c45s4")
+transform = Transform3D(0.707107, -0.664463, 0.241845, 0, 0.34202, 0.939693, -0.707107, -0.664463, 0.241845, 3, 7, 3)
 current = true
+fov = 60.0
 script = ExtResource("3_r5ulx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, 0, 1, 0, 0, -0.338289)
+mesh = SubResource("QuadMesh_q4qj6")
 
 [node name="TileRotLabel" type="Label" parent="."]
 unique_name_in_owner = true

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvfr8j3njiywm"]
+
+[ext_resource type="Material" uid="uid://cdfq4y4ol2o5r" path="res://materials/grass.tres" id="1_4h6gw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_163ek"]
+
+[node name="grass" type="MeshInstance3D"]
+transform = Transform3D(2, 0, 0, 0, 50, 0, 0, 0, 2, 0, -24.95, 0)
+material_override = ExtResource("1_4h6gw")
+mesh = SubResource("BoxMesh_163ek")
