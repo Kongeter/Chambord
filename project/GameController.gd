@@ -15,7 +15,7 @@ func _ready():
 
 func playGame():
 	while(true):
-		DebugHelper.showBoard(placedCards ,6,6)
+		#DebugHelper.showBoard(placedCards ,6,6)
 		await turn(0)
 		
 @rpc("any_peer","call_local")
