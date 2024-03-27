@@ -14,6 +14,7 @@ signal previewTileClicked(x,y)
 
 func _ready():
 	targetPosition = position
+
 func _process(delta):
 	mouseHandler(delta)
 	controlls(delta)
@@ -41,34 +42,24 @@ func mouseHandler(delta):
 			get_selection(get_viewport().get_mouse_position())
 		mouseDown = false
 		
-#func _input(event):
-	#var mouse = Vector2()
-	#if event is InputEventMouse:
-		#mouse = event.position
-	#if event is InputEventMouseButton and event.pressed:
-		#if event.button_index == MOUSE_BUTTON_LEFT:
-			#get_selection(mouse)
 func moveCamera(curMousePos, startMousePos):
 	var b = local_cam_space(get_x_z_plane_intersection(curMousePos))
 	var a = local_cam_space(get_x_z_plane_intersection(startMousePos))
 	var dif = a-b
 	targetPosition.x = startCamPos.x + dif.x
 	targetPosition.z = startCamPos.z + dif.y
-	pass
-
 
 func local_cam_space(v):
 	return Vector2(v.x - position.x, v.y-position.z)
+	
 func get_x_z_plane_intersection(mouse) -> Vector2:
 	var start = project_ray_origin(mouse)
 	var end = project_position(mouse, 1000)
 	var dir = end-start
 	dir = dir.normalized()
-	
 	var t = -start.y/dir.y
 	var point = start + t*dir
 	return Vector2(point.x,point.z)
-	
 	
 func get_selection(mouse):
 	var result = get_x_z_plane_intersection(mouse)

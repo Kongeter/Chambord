@@ -10,4 +10,3 @@ func _init(connectGroupsStreets_, connectGroupsCitys_, connectGroupsGrass_, hasC
 	connectGroupsCitys = connectGroupsCitys_
 	connectGroupsGrass = connectGroupsGrass_
 	hasChurch = hasChurch_
-

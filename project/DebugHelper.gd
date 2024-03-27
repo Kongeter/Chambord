@@ -40,17 +40,18 @@ static func showCoord(coords: Array, xMax, yMax) -> void:
 	var divider = "-"
 	for i in range(xMax):
 		divider += "---" 
-	for y in range (yMax):
+	for y_ in range (yMax):
+		var y = yMax - y_ -1
 		print(divider)
 		var stringTop = "|"
 		var stringBottom = "|"
 		for x in range(xMax):
 			var index = Helper.functionFindFirstIndex(coords, func(c:Coord): return c.equals(x,y))
 			if index == -1:
-				stringTop += "xx"
+				stringTop += str(x)+str(y)
 				stringBottom += "xx"
 			else:
-				stringTop += "0"+str(index)
+				stringTop += str(x)+str(y)
 				stringBottom += "0"+str(index)
 			stringTop += "|"
 			stringBottom += "|"

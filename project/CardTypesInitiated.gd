@@ -11,4 +11,3 @@ var cards = [
 	CardType.new([],[[0]],[[2,3,4,5,6,7]],false),#E
 	CardType.new([],[[1,3]],[[0,1],[4,5]],false),#F
 ]
-

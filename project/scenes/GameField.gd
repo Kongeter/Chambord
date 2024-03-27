@@ -8,21 +8,11 @@ var xClicked
 var yClicked
 var ValidPositions_G
 
-func tileChooserV2(type: String, ValidPositions:Array):
+func tileChooser(type: String, ValidPositions:Array):
 	ValidPositions_G = ValidPositions
 	$%TileLabel.text = type
 	tileRotation = 0
 	showPossiblePlaces(ValidPositions.filter(func(p):return p[2]==0).map(func(p):return Coord.new(p[0],p[1])))
-	#print(ValidPositions.filter(func(p):return p[2]==0).map(func(p):return "set: " + str(p[0]) + " " + str(p[1])))
-	await Signal(get_node("%Camera3D"), "previewTileClicked")
-	removePossiblePlaces()
-	return [xClicked, yClicked, tileRotation]
-
-
-func tileChooser(type: String, possiblePlaces:Array):
-	$%TileLabel.text = type
-	tileRotation = 0
-	showPossiblePlaces(possiblePlaces)
 	await Signal(get_node("%Camera3D"), "previewTileClicked")
 	removePossiblePlaces()
 	return [xClicked, yClicked, tileRotation]
@@ -42,7 +32,6 @@ func placeTile(x,y,tileRotation_,type):
 
 var previewCardElements:Array
 func showPossiblePlaces(possiblePlaces: Array):
-	
 	for coord:Coord in possiblePlaces:
 		var scene = load("res://tiles/previewCard.tscn")
 		var instance = scene.instantiate()
@@ -68,8 +57,3 @@ func controlls(delta):
 		showPossiblePlaces(ValidPositions_G.filter(func(p):return p[2]==tileRotation).map(func(p):return Coord.new(p[0],p[1])))
 	$%TileRotLabel.text = str(tileRotation)
 	
-
-	
-
-
-

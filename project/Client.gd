@@ -27,8 +27,8 @@ func _ready():
 	multiplayer.connected_to_server.connect(RTCServerConnected)
 	multiplayer.peer_connected.connect(RTCPeerConnected)
 	multiplayer.peer_disconnected.connect(RTCPeerDisconnected)
-	#connectToServer("ws://104.248.47.16:8915")
-	connectToServer("ws://127.0.0.1:8915")
+	connectToServer("ws://104.248.47.16:8915")
+	#connectToServer("ws://127.0.0.1:8915")
 	pass # Replace with function body.
 
 func RTCServerConnected():
