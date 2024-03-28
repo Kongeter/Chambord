@@ -1,21 +1,44 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3lxgmn13hcp5"]
+[gd_scene load_steps=6 format=3 uid="uid://c3lxgmn13hcp5"]
 
 [ext_resource type="PackedScene" uid="uid://dvfr8j3njiywm" path="res://assets/grass.tscn" id="1_4k3rh"]
 [ext_resource type="PackedScene" uid="uid://bvpytvylfh02q" path="res://assets/church.tscn" id="2_wxdki"]
+[ext_resource type="PackedScene" uid="uid://co4sosofxpbg" path="res://assets/point.tscn" id="3_bbjai"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nxoa7"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_64of3"]
 albedo_color = Color(0.72549, 0.560784, 0.341176, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_pcor8"]
-material = SubResource("StandardMaterial3D_nxoa7")
+material = SubResource("StandardMaterial3D_64of3")
 
-[node name="MeshInstance3D" type="Node3D"]
+[node name="Tile" type="Node3D"]
 
-[node name="grass" parent="." instance=ExtResource("1_4k3rh")]
+[node name="Grass" type="Node3D" parent="."]
 
-[node name="Church" parent="." instance=ExtResource("2_wxdki")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+[node name="0" type="Node3D" parent="Grass"]
 
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+[node name="Point" parent="Grass/0" instance=ExtResource("3_bbjai")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.559452, -0.0153348, 0.573474)
+
+[node name="grass" parent="Grass/0" instance=ExtResource("1_4k3rh")]
+
+[node name="City" type="Node3D" parent="."]
+
+[node name="Street" type="Node3D" parent="."]
+
+[node name="0" type="Node3D" parent="Street"]
+
+[node name="Point" parent="Street/0" instance=ExtResource("3_bbjai")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.844777, 0.0323304, -0.0151801)
+
+[node name="street" type="MeshInstance3D" parent="Street/0" groups=["Material"]]
 transform = Transform3D(0.873873, 0, 0, 0, 0.085, 0, 0, 0, 0.2, -0.611176, 0.0468859, 0)
 mesh = SubResource("BoxMesh_pcor8")
+skeleton = NodePath("../../..")
+
+[node name="Church" type="Node3D" parent="."]
+
+[node name="Point" parent="Church" instance=ExtResource("3_bbjai")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27806, 0)
+
+[node name="Church" parent="Church" instance=ExtResource("2_wxdki")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)

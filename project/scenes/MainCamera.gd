@@ -10,6 +10,8 @@ var maxDistFromStart := 0.0
 var timePressed := 0.0
 var targetPosition: Vector3
 
+signal actualClick
+
 signal previewTileClicked(x,y)
 
 func _ready():
@@ -39,6 +41,7 @@ func mouseHandler(delta):
 		
 	if Input.is_action_just_released("left_click"):
 		if maxDistFromStart <= 3 || timePressed<0.1:
+			actualClick.emit()
 			get_selection(get_viewport().get_mouse_position())
 		mouseDown = false
 		

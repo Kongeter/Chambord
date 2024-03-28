@@ -25,17 +25,17 @@ subdivide_width = 1
 
 [node name="CityFloor" type="Node3D"]
 
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="." groups=["Material"]]
 transform = Transform3D(0.9145, 0, 0, 0, 1, 0, 0, 0, 0.115471, 0, 0.0611669, 0.894559)
 mesh = SubResource("PlaneMesh_41i8s")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="." groups=["Material"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.101808, 0, 0.0611669, 0.707444)
 mesh = SubResource("PlaneMesh_fiw0y")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="." groups=["Material"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.101808, 0, 0.0611669, 0.506307)
 mesh = SubResource("PlaneMesh_m5gkb")
 skeleton = NodePath("../..")

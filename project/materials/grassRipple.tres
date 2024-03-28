@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cpaifjnohlo5v"]
+
+[ext_resource type="Shader" path="res://shaders/ripple.gdshader" id="1_plio8"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_plio8")
+shader_parameter/albedo = Color(0.14902, 0.341176, 0.172549, 1)
+shader_parameter/point_size = null
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = null
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/origin = Vector3(0.855, 0, 0)
+shader_parameter/ripple_color = Color(1, 0, 0, 1)
+shader_parameter/start_time = null

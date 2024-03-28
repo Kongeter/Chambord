@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0yu5cee50l3l"]
+[gd_scene load_steps=7 format=3 uid="uid://b0yu5cee50l3l"]
 
+[ext_resource type="PackedScene" uid="uid://c5htwiqf0eff5" path="res://assets/halfGrass.tscn" id="1_junps"]
+[ext_resource type="PackedScene" uid="uid://co4sosofxpbg" path="res://assets/point.tscn" id="2_6m6ey"]
 [ext_resource type="PackedScene" uid="uid://mxo8kk20vkyr" path="res://assets/city_floor.tscn" id="2_i2fm0"]
 [ext_resource type="PackedScene" uid="uid://duk2rrxv38n14" path="res://assets/wall.tscn" id="3_qsugx"]
-[ext_resource type="PackedScene" uid="uid://dvfr8j3njiywm" path="res://assets/grass.tscn" id="3_r04d0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pgjhh"]
 albedo_color = Color(0.72549, 0.560784, 0.341176, 1)
@@ -10,14 +11,46 @@ albedo_color = Color(0.72549, 0.560784, 0.341176, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_6ho4n"]
 material = SubResource("StandardMaterial3D_pgjhh")
 
-[node name="MeshInstance3D" type="Node3D"]
+[node name="Tile" type="Node3D"]
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+[node name="Grass" type="Node3D" parent="."]
+
+[node name="0" type="Node3D" parent="Grass"]
+
+[node name="Point" parent="Grass/0" instance=ExtResource("2_6m6ey")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.540459)
+
+[node name="halfGrass" parent="Grass/0" instance=ExtResource("1_junps")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+
+[node name="1" type="Node3D" parent="Grass"]
+
+[node name="Point" parent="Grass/1" instance=ExtResource("2_6m6ey")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.746812, 0, 0.305282)
+
+[node name="halfGrass" parent="Grass/1" instance=ExtResource("1_junps")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+
+[node name="City" type="Node3D" parent="."]
+
+[node name="0" type="Node3D" parent="City"]
+
+[node name="Point" parent="City/0" instance=ExtResource("2_6m6ey")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0103325, 0, 0.722904)
+
+[node name="CityFloor" parent="City/0" instance=ExtResource("2_i2fm0")]
+
+[node name="Wall" parent="City/0" instance=ExtResource("3_qsugx")]
+
+[node name="Street" type="Node3D" parent="."]
+
+[node name="0" type="Node3D" parent="Street"]
+
+[node name="Point" parent="Street/0" instance=ExtResource("2_6m6ey")]
+
+[node name="street" type="MeshInstance3D" parent="Street/0" groups=["Material"]]
 transform = Transform3D(2.1, 0, 0, 0, 0.085, 0, 0, 0, 0.2, 0, 0.0468859, 0)
 mesh = SubResource("BoxMesh_6ho4n")
+skeleton = NodePath("../../..")
 
-[node name="CityFloor" parent="." instance=ExtResource("2_i2fm0")]
-
-[node name="Wall" parent="." instance=ExtResource("3_qsugx")]
-
-[node name="grass" parent="." instance=ExtResource("3_r04d0")]
+[node name="Church" type="Node3D" parent="."]

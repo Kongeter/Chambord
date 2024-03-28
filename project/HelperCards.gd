@@ -9,11 +9,11 @@ static func getCardAt(placedCards,x,y):
 
 #calculates the type of Edge (0=grass, 1=street, 2=city) from any given card
 static func calcEdgeType(cardType, rotation):
-	var Defintions = CardTypesInitiated.new()
+	var Defintions = CardTypes.cards;
 	var res = []
 	var index = Helper.getIndexFromLetter(cardType);
-	var streetsFlattend = Helper.flatten(Defintions.cards[index].connectGroupsStreets)
-	var cityFlattend = Helper.flatten(Defintions.cards[index].connectGroupsCitys)
+	var streetsFlattend = Helper.flatten(Defintions[index].connectGroupsStreets)
+	var cityFlattend = Helper.flatten(Defintions[index].connectGroupsCitys)
 	for side: int in range(0,4):
 		var sideRotated = (side + 3 * rotation) % 4 
 		if streetsFlattend.has(sideRotated):

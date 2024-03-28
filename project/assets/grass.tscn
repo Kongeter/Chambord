@@ -1,10 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvfr8j3njiywm"]
+[gd_scene load_steps=5 format=3 uid="uid://dvfr8j3njiywm"]
 
-[ext_resource type="Material" uid="uid://cdfq4y4ol2o5r" path="res://materials/grass.tres" id="1_4h6gw"]
+[ext_resource type="Material" uid="uid://cpaifjnohlo5v" path="res://materials/grassRipple.tres" id="1_q6o37"]
+[ext_resource type="Script" path="res://GroupSelector.gd" id="2_vf6ku"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_163ek"]
+[sub_resource type="BoxMesh" id="BoxMesh_me6bk"]
 
-[node name="grass" type="MeshInstance3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_jurnc"]
+size = Vector3(2, 50, 2)
+
+[node name="grass" type="Node3D"]
+
+[node name="grass" type="MeshInstance3D" parent="." groups=["Material"]]
 transform = Transform3D(2, 0, 0, 0, 50, 0, 0, 0, 2, 0, -24.95, 0)
-material_override = ExtResource("1_4h6gw")
-mesh = SubResource("BoxMesh_163ek")
+material_override = ExtResource("1_q6o37")
+mesh = SubResource("BoxMesh_me6bk")
+skeleton = NodePath("../../..")
+
+[node name="Collider" type="Area3D" parent="." groups=["Collision"]]
+script = ExtResource("2_vf6ku")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -24.95, 0)
+shape = SubResource("BoxShape3D_jurnc")
