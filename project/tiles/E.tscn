@@ -1,15 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://cmvibab4deqhy"]
+[gd_scene load_steps=5 format=3 uid="uid://cmvibab4deqhy"]
 
+[ext_resource type="PackedScene" uid="uid://co4sosofxpbg" path="res://assets/point.tscn" id="2_p6h0n"]
 [ext_resource type="PackedScene" uid="uid://mxo8kk20vkyr" path="res://assets/city_floor.tscn" id="2_uqgfq"]
 [ext_resource type="PackedScene" uid="uid://duk2rrxv38n14" path="res://assets/wall.tscn" id="3_2low3"]
 [ext_resource type="PackedScene" uid="uid://dvfr8j3njiywm" path="res://assets/grass.tscn" id="3_2xeni"]
 
-[node name="MeshInstance3D" type="Node3D"]
+[node name="Tile" type="Node3D"]
 
-[node name="CityFloor2" parent="." instance=ExtResource("2_uqgfq")]
+[node name="Grass" type="Node3D" parent="."]
+
+[node name="0" type="Node3D" parent="Grass"]
+
+[node name="Point" parent="Grass/0" instance=ExtResource("2_p6h0n")]
+
+[node name="grass" parent="Grass/0" instance=ExtResource("3_2xeni")]
+
+[node name="City" type="Node3D" parent="."]
+
+[node name="0" type="Node3D" parent="City"]
+
+[node name="Point" parent="City/0" instance=ExtResource("2_p6h0n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.805409, 0, 0)
+
+[node name="CityFloor2" parent="City/0" instance=ExtResource("2_uqgfq")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
-[node name="Wall" parent="." instance=ExtResource("3_2low3")]
+[node name="Wall" parent="City/0" instance=ExtResource("3_2low3")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
-[node name="grass" parent="." instance=ExtResource("3_2xeni")]
+[node name="Street" type="Node3D" parent="."]
+
+[node name="Church" type="Node3D" parent="."]

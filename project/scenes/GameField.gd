@@ -4,9 +4,11 @@ func _process(delta):
 	controlls(delta)
 	
 var tileRotation
-var xClicked
-var yClicked
+var xClicked = 1
+var yClicked = 1
 var ValidPositions_G
+var placedTileNodes : Dictionary
+var flagNode = preload("res://assets/flag.tscn")
 
 func tileChooser(type: String, ValidPositions:Array):
 	ValidPositions_G = ValidPositions
@@ -29,6 +31,26 @@ func placeTile(x,y,tileRotation_,type):
 	instance.position.z = 2*y+1
 	instance.rotate_y(-deg_to_rad(90.0)*(tileRotation_+1))
 	add_child(instance)
+	placedTileNodes[Vector2(x,y)] = instance
+	markGroupSelectors(instance,Helper.getIndexFromLetter(type))
+
+func placeFlag(flag : Flag):
+	var tile : Node = placedTileNodes[Vector2(flag.x, flag.y)]
+	var subNode
+	match flag.type:
+		0:
+			subNode = tile.get_node("Grass/"+str(flag.group))
+		1:
+			subNode = tile.get_node("City/"+str(flag.group))
+		2:
+			subNode = tile.get_node("Street/"+str(flag.group))
+		3:
+			subNode = tile.get_node("Church")
+	var point = subNode.get_child(0)
+	var flagInst = flagNode.instantiate()
+	add_child(flagInst)
+	flagInst.position = point.global_position
+	
 
 var previewCardElements:Array
 func showPossiblePlaces(possiblePlaces: Array):
@@ -55,4 +77,26 @@ func controlls(delta):
 		removePossiblePlaces()
 		showPossiblePlaces(ValidPositions_G.filter(func(p):return p[2]==tileRotation).map(func(p):return Coord.new(p[0],p[1])))
 	$%TileRotLabel.text = str(tileRotation)
+
+func markGroupSelectors(tile, type: int):
+	print(tile.name)
+	var groupNodes = [tile.get_node("Grass"), tile.get_node("City"), tile.get_node("Street"),tile.get_node("Church")]
+	var cardType : CardType = CardTypes.cards[type]
+	var lengths = [cardType.connectGroupsGrass.size(),cardType.connectGroupsCitys.size(),cardType.connectGroupsStreets.size()]
+	for i in range(3):
+		for j in range(lengths[i]):
+			var group : Node3D = groupNodes[i].get_node(str(j))
+			var collisions = Helper.getChildrenWithGroup(group,"Collision")
+			for col in collisions:
+				if(col is GroupSelector):
+					col.type = i
+					col.group = j
+	if cardType.hasChurch:
+		var collisions = Helper.getChildrenWithGroup(groupNodes[3],"Collision")
+		for col in collisions:
+			if(col is GroupSelector):
+				col.type = 3
+				col.group = 0
+		
+	
 	

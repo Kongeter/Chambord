@@ -1,4 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://mxo8kk20vkyr"]
+[gd_scene load_steps=9 format=3 uid="uid://mxo8kk20vkyr"]
+
+[ext_resource type="Script" path="res://GroupSelector.gd" id="1_l4svl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a8qxv"]
 albedo_color = Color(0.537255, 0.258824, 0, 1)
@@ -23,19 +25,29 @@ material = SubResource("StandardMaterial3D_rup2k")
 size = Vector2(1.2, 2)
 subdivide_width = 1
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_kp2by"]
+size = Vector3(1, 0.163666, 0.58429)
+
 [node name="CityFloor" type="Node3D"]
 
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="." groups=["Material"]]
 transform = Transform3D(0.9145, 0, 0, 0, 1, 0, 0, 0, 0.115471, 0, 0.0611669, 0.894559)
 mesh = SubResource("PlaneMesh_41i8s")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="." groups=["Material"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.101808, 0, 0.0611669, 0.707444)
 mesh = SubResource("PlaneMesh_fiw0y")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="." groups=["Material"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.101808, 0, 0.0611669, 0.506307)
 mesh = SubResource("PlaneMesh_m5gkb")
 skeleton = NodePath("../..")
+
+[node name="Collider" type="Area3D" parent="." groups=["Collision"]]
+script = ExtResource("1_l4svl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0225983, 0.71393)
+shape = SubResource("BoxShape3D_kp2by")

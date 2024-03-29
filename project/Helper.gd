@@ -53,3 +53,15 @@ static func getIndexFromLetter(s: String):
 		"F":
 			index=5;
 	return index
+
+static func getChildrenWithGroup(node : Node, group: String):
+	var objs = []
+	for child in node.get_children():
+		if child.is_in_group(group):
+			objs.append(child)
+		var childObjs = getChildrenWithGroup(child, group)
+		objs.append_array(childObjs)
+	return objs
+		
+		
+	

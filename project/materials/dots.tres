@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dnq6wppc5wtvc"]
+
+[ext_resource type="Shader" path="res://shaders/dots.gdshader" id="1_npc36"]
+[ext_resource type="Texture2D" uid="uid://dtfrreuru8g64" path="res://textures/dots.png" id="2_13dyc"]
+
+[resource]
+render_priority = -125
+shader = ExtResource("1_npc36")
+shader_parameter/texture_dots = ExtResource("2_13dyc")
