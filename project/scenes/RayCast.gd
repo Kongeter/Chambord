@@ -37,7 +37,7 @@ func _process(delta):
 		var group = collider.group
 		var round = collider.round
 		var type = collider.type;
-		if group != curGroup:
+		if group != curGroup || type != curType || round != curRound:
 			unhoverGroup.emit(curType, curGroup, curRound)
 			hoverGroup.emit(type,group,round)
 			curGroup = group

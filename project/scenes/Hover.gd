@@ -22,6 +22,8 @@ func _on_ray_cast_3d_hover_group(type, group, round):
 			subNode = tile.get_node("Street/"+str(group))
 		3:
 			subNode = tile.get_node("Church")
+	if subNode == null:
+		return 
 	var children = Helper.getChildrenWithGroup(subNode,"Material")
 	print(children.size())
 	for c : MeshInstance3D in children:

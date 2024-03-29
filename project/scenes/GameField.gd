@@ -81,15 +81,23 @@ func controlls(delta):
 
 func markGroupSelectors(tile, type: int):
 	print(tile.name)
-	var grass = tile.get_node("Grass")
-	for i in range(CardTypes.cards[type].connectGroupsGrass.size()):
-		
-		var group : Node3D = grass.get_node(str(i))
-		var collisions = Helper.getChildrenWithGroup(group,"Collision")
+	var groupNodes = [tile.get_node("Grass"), tile.get_node("City"), tile.get_node("Street"),tile.get_node("Church")]
+	var cardType : CardType = CardTypes.cards[type]
+	var lengths = [cardType.connectGroupsGrass.size(),cardType.connectGroupsCitys.size(),cardType.connectGroupsStreets.size()]
+	for i in range(3):
+		for j in range(lengths[i]):
+			var group : Node3D = groupNodes[i].get_node(str(j))
+			var collisions = Helper.getChildrenWithGroup(group,"Collision")
+			for col in collisions:
+				if(col is GroupSelector):
+					col.type = i
+					col.group = j
+	if cardType.hasChurch:
+		var collisions = Helper.getChildrenWithGroup(groupNodes[3],"Collision")
 		for col in collisions:
 			if(col is GroupSelector):
-				col.type = 0
-				col.group = i
+				col.type = 3
+				col.group = 0
 		
 	
 	

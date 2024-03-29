@@ -15,17 +15,17 @@
 
 [node name="grass" parent="Grass/0" instance=ExtResource("3_2xeni")]
 
-[node name="City2" type="Node3D" parent="."]
+[node name="City" type="Node3D" parent="."]
 
-[node name="0" type="Node3D" parent="City2"]
+[node name="0" type="Node3D" parent="City"]
 
-[node name="Point" parent="City2/0" instance=ExtResource("2_p6h0n")]
+[node name="Point" parent="City/0" instance=ExtResource("2_p6h0n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.805409, 0, 0)
 
-[node name="CityFloor2" parent="City2/0" instance=ExtResource("2_uqgfq")]
+[node name="CityFloor2" parent="City/0" instance=ExtResource("2_uqgfq")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
-[node name="Wall" parent="City2/0" instance=ExtResource("3_2low3")]
+[node name="Wall" parent="City/0" instance=ExtResource("3_2low3")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="Street" type="Node3D" parent="."]

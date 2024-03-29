@@ -1,9 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://bvpytvylfh02q"]
+[gd_scene load_steps=3 format=3 uid="uid://bvpytvylfh02q"]
 
 [ext_resource type="PackedScene" uid="uid://cs5evxgfvi3gi" path="res://models/church.tscn" id="1_jsu5x"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rykf8"]
+size = Vector3(0.994751, 1.4169, 0.997803)
 
 [node name="Church" type="Node3D"]
 metadata/_edit_lock_ = true
 
 [node name="church" parent="." instance=ExtResource("1_jsu5x")]
 transform = Transform3D(-0.218866, 0, -0.120821, 0, 0.25, 0, 0.120821, 0, -0.218866, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="." groups=["Collision"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0087359, 0.596511, -0.0152588)
+shape = SubResource("BoxShape3D_rykf8")

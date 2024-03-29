@@ -28,7 +28,7 @@ void vertex() {
 
 
 void fragment() {
-	
+
 	ALBEDO = albedo.rgb;
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
