@@ -5,9 +5,9 @@ signal clickedGroup(type, group, round)
 signal hoverGroup(type, group, round)
 signal unhoverGroup(type, group, round)
 
-var curGroup;
-var curType;
-var curRound;
+var curGroup = -1;
+var curType = -1;
+var curRound = -1;
 
 func rippleTest(position):
 	var material: ShaderMaterial = load("res://materials/grassRipple.tres")
@@ -27,13 +27,19 @@ func _process(delta):
 	var collider = get_collider()
 	if(Input.is_action_just_pressed("cam_zoom_in")):
 		rippleTest( get_collision_point())
-	if collider is GroupSelector:
+	if !is_colliding():
+		if(curGroup != -1):
+			unhoverGroup.emit(curType, curGroup, curRound)
+			curGroup = -1
+			curType = -1
+			curRound = -1
+	elif collider is GroupSelector:
 		var group = collider.group
 		var round = collider.round
 		var type = collider.type;
 		if group != curGroup:
-			hoverGroup.emit(type,group,round)
 			unhoverGroup.emit(curType, curGroup, curRound)
+			hoverGroup.emit(type,group,round)
 			curGroup = group
 			curType = type
 			curRound = round

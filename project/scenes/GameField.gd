@@ -4,8 +4,8 @@ func _process(delta):
 	controlls(delta)
 	
 var tileRotation
-var xClicked
-var yClicked
+var xClicked = 1
+var yClicked = 1
 var ValidPositions_G
 var placedTileNodes : Dictionary
 var flagNode = preload("res://assets/flag.tscn")

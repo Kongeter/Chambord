@@ -20,7 +20,7 @@ func playGame():
 	while(true):
 		#DebugHelper.showBoard(placedCards ,6,6)
 		await turn(0)
-		#await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.5).timeout
 		
 @rpc("any_peer","call_local")
 func placeTile(tilePosAndRotation, tileType):
@@ -34,7 +34,7 @@ func turn(player: int):
 	var ValidPositions = HelperCards.getValidPositions(tileType, placedCards)
 	var klickedTileCoordsAndRotation = await GameField.tileChooser(tileType, ValidPositions)
 	placeTile.rpc(klickedTileCoordsAndRotation, tileType)
-	#var result = await $"../RayCast3D".clickedGroup
-	#var flag = Flag.new(klickedTileCoordsAndRotation[0],klickedTileCoordsAndRotation[1],result[1],result[0], 0)
-	#placedFlags.append(flag)
-	#GameField.placeFlag(flag)
+	var result = await $"../RayCast3D".clickedGroup
+	var flag = Flag.new(klickedTileCoordsAndRotation[0],klickedTileCoordsAndRotation[1],result[1],result[0], 0)
+	placedFlags.append(flag)
+	GameField.placeFlag(flag)
