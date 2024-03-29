@@ -12,7 +12,7 @@ func _on_ray_cast_3d_hover_group(type, group, round):
 	var curTile = Vector2(GameField.xClicked,GameField.yClicked)
 	var tile : Node = GameField.placedTileNodes[curTile]
 	var subNode
-	print(type)
+	#print(type)
 	match type:
 		0:
 			subNode = tile.get_node("Grass/"+str(group))
@@ -25,14 +25,14 @@ func _on_ray_cast_3d_hover_group(type, group, round):
 	if subNode == null:
 		return 
 	var children = Helper.getChildrenWithGroup(subNode,"Material")
-	print(children.size())
+	#print(children.size())
 	for c : MeshInstance3D in children:
 		c.material_overlay = material
 		nodesThatWhereChanged.append(c)
 
 
 func _on_ray_cast_3d_unhover_group(type, group, round):
-	print("test")
+	#print("test")
 	for n in nodesThatWhereChanged:
 		n.material_overlay = null
 	nodesThatWhereChanged = []
