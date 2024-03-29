@@ -1,89 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvpytvylfh02q"]
+[gd_scene load_steps=2 format=3 uid="uid://bvpytvylfh02q"]
 
-[ext_resource type="Material" uid="uid://bnmvcrw8gyscg" path="res://materials/ChurchWall.tres" id="1_pr63h"]
-[ext_resource type="Material" uid="uid://x8pp58njnpk7" path="res://materials/ChurchRoof.tres" id="2_317io"]
-[ext_resource type="Material" uid="uid://xa1cu2qojbn6" path="res://materials/black.tres" id="3_wd8tw"]
-[ext_resource type="Material" uid="uid://dundxdmxflen" path="res://materials/City.tres" id="4_qel2f"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_185v8"]
-albedo_color = Color(0.517647, 0.513726, 0.537255, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_c3gqa"]
-material = SubResource("StandardMaterial3D_185v8")
-size = Vector3(0.6, 1, 0.6)
-
-[sub_resource type="PrismMesh" id="PrismMesh_a7esa"]
+[ext_resource type="PackedScene" uid="uid://cs5evxgfvi3gi" path="res://models/church.tscn" id="1_jsu5x"]
 
 [node name="Church" type="Node3D"]
+metadata/_edit_lock_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.7, 0, 0.351638, 0)
-material_override = ExtResource("1_pr63h")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.605, 0, 0, 0, 0.500997, 0, 0, 0, 1.02, 0, 1.07906, 0)
-material_override = ExtResource("1_pr63h")
-mesh = SubResource("PrismMesh_a7esa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.164431, 0.378483, 0, -0.102576, 0.606713, 0, 0, 0, 1.80812, -0.185681, 1.06897, 0)
-material_override = ExtResource("2_317io")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.164354, -0.378939, 0, 0.1027, 0.606429, 0, 0, 0, 1.80812, 0.186, 1.069, 0)
-material_override = ExtResource("2_317io")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.678909, 0, 0, 0, 0.889745, 0.27797, 0.201536, 0)
-material_override = ExtResource("1_pr63h")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.678909, 0, 0, 0, 0.889745, -0.278, 0.202, 0)
-material_override = ExtResource("1_pr63h")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0906607, -0.432049, 0, 0.171228, 0.228758, 0, 0, 0, 1.06927, 0.441028, 0.563087, 0)
-material_override = ExtResource("2_317io")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D8" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0906607, 0.432049, 0, -0.171228, 0.228758, 0, 0, 0, 1.06927, -0.441, 0.563, 0)
-material_override = ExtResource("2_317io")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D9" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0674051, 0, 0, 0, 0.612088, 0, 0, 0, 0.0829946, 0, 1.56221, 0.393174)
-material_override = ExtResource("3_wd8tw")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D10" type="MeshInstance3D" parent="."]
-transform = Transform3D(-2.94637e-09, 0.320124, 0, -0.0674051, -1.39931e-08, 0, 0, 0, 0.0829946, 0, 1.56131, 0.393174)
-material_override = ExtResource("3_wd8tw")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D11" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.566405, 0, 0, 0, 0.725826, 0, 0, 0, 0.155707, 0, 0.20204, 0.490918)
-material_override = ExtResource("4_qel2f")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D12" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.1512, 0, 0, 0, 0.0830478, 0, 0, 0, 1.80812, 0, 1.361, 0)
-material_override = ExtResource("2_317io")
-mesh = SubResource("BoxMesh_c3gqa")
-skeleton = NodePath("../..")
+[node name="church" parent="." instance=ExtResource("1_jsu5x")]
+transform = Transform3D(-0.218866, 0, -0.120821, 0, 0.25, 0, 0.120821, 0, -0.218866, 0, 0, 0)
