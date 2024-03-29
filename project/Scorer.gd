@@ -3,11 +3,6 @@ class_name Scorer
 
 
 
-
-	
-
-
-
 #bekommt Koordinate von Karte + Richtung (0 oben dann im Uhrzeigersinn)
 #Gibt dann Array zurück von: (Koordinate, Richtung) die man durch die Straße erreichen kann (wobei richtung dann die richtung ist mit der man bei der neuen Karte ankommt)
 static func getStreetOrCityConnection(card: Card, direction: int, street: bool) ->Array:
@@ -19,7 +14,6 @@ static func getStreetOrCityConnection(card: Card, direction: int, street: bool) 
 		groups = Defintions.cards[card.type].connectGroupsCitys
 		
 	var groupsRotated = groups.map(func(x): return x.map(func(y): return (y + card.rotation) % 4))
-	
 	var group = groupsRotated.filter(func(x): return x.has(direction))[0];
 
 	if group.size() <= 1:

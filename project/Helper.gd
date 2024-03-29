@@ -13,7 +13,7 @@ static func functionFindFirstObject(array: Array, f: Callable):
 	for i in range(array.size()):
 		if f.call(array[i]):
 			return array[i]
-	return -1
+	return null
 
 #does "array" have any element that fulfills Funktion "f"?
 static func arrayHas(array: Array, f: Callable) -> bool:
@@ -29,6 +29,13 @@ static func flatten(array: Array):
 		for element in subArray:
 			result.append(element)
 	return result
+	
+static func withoutDuplicates(array: Array) -> Array:
+	var res: Array = []
+	for element in array:
+		if not res.has(element):
+			res.append(element)
+	return res
 
 static func getIndexFromLetter(s: String):
 	var index;
