@@ -1,15 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0yu5cee50l3l"]
+[gd_scene load_steps=9 format=3 uid="uid://b0yu5cee50l3l"]
 
 [ext_resource type="PackedScene" uid="uid://c5htwiqf0eff5" path="res://assets/halfGrass.tscn" id="1_junps"]
 [ext_resource type="PackedScene" uid="uid://co4sosofxpbg" path="res://assets/point.tscn" id="2_6m6ey"]
 [ext_resource type="PackedScene" uid="uid://mxo8kk20vkyr" path="res://assets/city_floor.tscn" id="2_i2fm0"]
 [ext_resource type="PackedScene" uid="uid://duk2rrxv38n14" path="res://assets/wall.tscn" id="3_qsugx"]
+[ext_resource type="Script" path="res://GroupSelector.gd" id="5_nabq7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pgjhh"]
 albedo_color = Color(0.72549, 0.560784, 0.341176, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_6ho4n"]
 material = SubResource("StandardMaterial3D_pgjhh")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a5wdn"]
+size = Vector3(2.14392, 0.633789, 0.33728)
 
 [node name="Tile" type="Node3D"]
 
@@ -52,5 +56,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0103325, 0, 0.722904)
 transform = Transform3D(2.1, 0, 0, 0, 0.085, 0, 0, 0, 0.2, 0, 0.0468859, 0)
 mesh = SubResource("BoxMesh_6ho4n")
 skeleton = NodePath("../../..")
+
+[node name="Collider" type="Area3D" parent="Street/0" groups=["Collision"]]
+script = ExtResource("5_nabq7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Street/0/Collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00323486, -0.183105, -0.00665283)
+shape = SubResource("BoxShape3D_a5wdn")
 
 [node name="Church" type="Node3D" parent="."]
