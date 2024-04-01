@@ -59,6 +59,7 @@ editor_description = "Spielfeld"
 script = ExtResource("4_4m6m6")
 
 [node name="GameController" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("1_5o2de")
 
 [node name="Camera3D" type="Camera3D" parent="."]

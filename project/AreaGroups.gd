@@ -105,3 +105,22 @@ func getConnectGroupRotated(index, type,rotation):
 
 func newAreaNode(group, card_):
 	return AreaNode.new(card_.xCoord, card_.yCoord, group)
+	
+func getAreaGroup(x,y,group,type):
+	var dict1 
+	var dict2 
+	match type:
+		AreaType.CITY:
+			dict1=cityAreas
+			dict2=tileWhichAreaCity
+		AreaType.STREET:
+			dict1=streetAreas
+			dict2=tileWhichAreaStreet
+		AreaType.GRASS:
+			dict1=grassAreas
+			dict2=tileWhichAreaGrass
+	var areaIndex = dict2[Vector3(x,y,group)]
+	var area = dict1[areaIndex]
+	return area
+			
+	

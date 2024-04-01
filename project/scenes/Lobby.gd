@@ -22,7 +22,7 @@ func showPlayers(players):
 	
 	for player in players:
 		var playerInst = playerUI.instantiate()
-		playerInst.get_node("Name").text = player
+		playerInst.get_node("Name").text = player.Name
 		$LobbyMenu/HBoxContainer.add_child(playerInst)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.

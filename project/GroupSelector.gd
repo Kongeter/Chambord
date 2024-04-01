@@ -1,6 +1,6 @@
 extends Area3D
 class_name GroupSelector
 
-var round: int
+var coords: Vector2
 var type: int
 var group: int

@@ -1,13 +1,13 @@
 extends RayCast3D
 
 
-signal clickedGroup(type, group, round)
-signal hoverGroup(type, group, round)
-signal unhoverGroup(type, group, round)
+signal clickedGroup(type, group, coords)
+signal hoverGroup(type, group, coords)
+signal unhoverGroup(type, group, coords)
 
 var curGroup = -1;
 var curType = -1;
-var curRound = -1;
+var curCoords = Vector2(-1,-1);
 
 func rippleTest(position):
 	var material: ShaderMaterial = load("res://materials/grassRipple.tres")
@@ -29,25 +29,23 @@ func _process(delta):
 		rippleTest( get_collision_point())
 	if !is_colliding():
 		if(curGroup != -1):
-			unhoverGroup.emit(curType, curGroup, curRound)
+			unhoverGroup.emit(curType, curGroup, curCoords)
 			curGroup = -1
 			curType = -1
-			curRound = -1
+			curCoords = Vector2(-1,-1)
 	elif collider is GroupSelector:
 		var group = collider.group
-		var round = collider.round
+		var coords = collider.coords
 		var type = collider.type;
-		if group != curGroup || type != curType || round != curRound:
-			unhoverGroup.emit(curType, curGroup, curRound)
-			hoverGroup.emit(type,group,round)
+		if group != curGroup || type != curType || coords != curCoords:
+			unhoverGroup.emit(curType, curGroup, curCoords)
+			hoverGroup.emit(type,group,coords)
 			curGroup = group
 			curType = type
-			curRound = round
-	
-	
+			curCoords = coords
 	pass
 
 
 func _on_camera_3d_actual_click():
-	clickedGroup.emit(curType, curGroup, curRound)
+	clickedGroup.emit(curType, curGroup, curCoords)
 	pass # Replace with function body.

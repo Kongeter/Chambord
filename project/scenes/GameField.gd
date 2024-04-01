@@ -32,21 +32,26 @@ func placeTile(x,y,tileRotation_,type):
 	instance.rotate_y(-deg_to_rad(90.0)*(tileRotation_+1))
 	add_child(instance)
 	placedTileNodes[Vector2(x,y)] = instance
-	markGroupSelectors(instance,Helper.getIndexFromLetter(type))
+	markGroupSelectors(instance,Helper.getIndexFromLetter(type), Vector2(x,y))
 
 func placeFlag(flag : Flag):
 	var tile : Node = placedTileNodes[Vector2(flag.x, flag.y)]
 	var subNode
+	print(flag.x, flag.y)
+	print("flag type: ", flag.type)
+	print(tile)
 	match flag.type:
-		0:
+		AreaType.GRASS:
+			print("test grass")
 			subNode = tile.get_node("Grass/"+str(flag.group))
-		1:
+		AreaType.CITY:
 			subNode = tile.get_node("City/"+str(flag.group))
-		2:
+		AreaType.STREET:
 			subNode = tile.get_node("Street/"+str(flag.group))
-		3:
+		AreaType.CHURCH:
 			subNode = tile.get_node("Church")
 	var point = subNode.get_child(0)
+	print(point)
 	var flagInst = flagNode.instantiate()
 	add_child(flagInst)
 	flagInst.position = point.global_position
@@ -78,25 +83,31 @@ func controlls(delta):
 		showPossiblePlaces(ValidPositions_G.filter(func(p):return p[2]==tileRotation).map(func(p):return Coord.new(p[0],p[1])))
 	$%TileRotLabel.text = str(tileRotation)
 
-func markGroupSelectors(tile, type: int):
+func markGroupSelectors(tile, type: int, coords: Vector2):
 	print(tile.name)
-	var groupNodes = [tile.get_node("Grass"), tile.get_node("City"), tile.get_node("Street"),tile.get_node("Church")]
+	#var groupNodes = [tile.get_node("Grass"), tile.get_node("City"), tile.get_node("Street"),tile.get_node("Church")]
 	var cardType : CardType = CardTypes.cards[type]
-	var lengths = [cardType.connectGroupsGrass.size(),cardType.connectGroupsCitys.size(),cardType.connectGroupsStreets.size()]
-	for i in range(3):
-		for j in range(lengths[i]):
-			var group : Node3D = groupNodes[i].get_node(str(j))
-			var collisions = Helper.getChildrenWithGroup(group,"Collision")
-			for col in collisions:
-				if(col is GroupSelector):
-					col.type = i
-					col.group = j
+	#var lengths = [cardType.connectGroupsGrass.size(),cardType.connectGroupsCitys.size(),cardType.connectGroupsStreets.size()]
+	markSelector(cardType.connectGroupsGrass.size(), tile.get_node("Grass"), AreaType.GRASS, coords)
+	markSelector(cardType.connectGroupsCitys.size(), tile.get_node("City"), AreaType.CITY, coords)
+	markSelector(cardType.connectGroupsStreets.size(), tile.get_node("Street"), AreaType.STREET, coords)
+		
 	if cardType.hasChurch:
-		var collisions = Helper.getChildrenWithGroup(groupNodes[3],"Collision")
+		var collisions = Helper.getChildrenWithGroup(tile.get_node("Church"),"Collision")
 		for col in collisions:
 			if(col is GroupSelector):
-				col.type = 3
+				col.type = AreaType.CHURCH
 				col.group = 0
+				col.coords = coords
 		
 	
 	
+func markSelector(length, node, type, coords):
+	for j in range(length):
+			var group : Node3D = node.get_node(str(j))
+			var collisions = Helper.getChildrenWithGroup(group,"Collision")
+			for col in collisions:
+				if(col is GroupSelector):
+					col.type = type
+					col.group = j
+					col.coords = coords

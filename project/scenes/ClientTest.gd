@@ -1,7 +1,6 @@
 extends Node
 
 @onready var lobby = $Lobby
-var mainScene = preload("res://scenes/mainScene.tscn").instantiate()
 
 enum Message{
 	id,
@@ -27,7 +26,7 @@ func _ready():
 	multiplayer.connected_to_server.connect(RTCServerConnected)
 	multiplayer.peer_connected.connect(RTCPeerConnected)
 	multiplayer.peer_disconnected.connect(RTCPeerDisconnected)
-	connectToServer("ws://104.248.47.16:8915")
+	connectToServer("ws://345654.xyz:8915")
 	#connectToServer("ws://127.0.0.1:8915")
 	pass # Replace with function body.
 
@@ -179,7 +178,6 @@ func ping():
 @rpc("any_peer","call_local")
 func switchScene():
 	remove_child($Lobby)
-	get_tree().root.add_child(mainScene)
 
 func startGame():
 	switchScene.rpc()
@@ -188,7 +186,7 @@ func startGame():
 func getPlayerNames(players):
 	var playerNames : Array = []
 	for p in players:
-		playerNames.append(players[p].name)
+		playerNames.append({"Name":players[p].name})
 	return playerNames
 
 

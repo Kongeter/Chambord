@@ -1,0 +1,109 @@
+[gd_scene load_steps=3 format=3 uid="uid://difh7404oildh"]
+
+[ext_resource type="Script" path="res://SocketClient.gd" id="1_diakd"]
+[ext_resource type="Script" path="res://scenes/Lobby.gd" id="2_n8goj"]
+
+[node name="Client" type="Node"]
+script = ExtResource("1_diakd")
+
+[node name="Lobby" type="Control" parent="."]
+auto_translate_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_n8goj")
+
+[node name="LobbySelect" type="Control" parent="Lobby"]
+auto_translate_mode = 1
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Name" type="LineEdit" parent="Lobby/LobbySelect"]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 334.0
+offset_top = 217.0
+offset_right = 780.0
+offset_bottom = 256.0
+placeholder_text = "Name"
+alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="Lobby/LobbySelect"]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 333.0
+offset_top = 311.0
+offset_right = 655.0
+offset_bottom = 350.0
+placeholder_text = "Lobby Code"
+
+[node name="CreateLobby" type="Button" parent="Lobby/LobbySelect"]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 335.0
+offset_top = 264.0
+offset_right = 778.0
+offset_bottom = 303.0
+text = "Create Lobby"
+
+[node name="JoinLobby" type="Button" parent="Lobby/LobbySelect"]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 668.0
+offset_top = 311.0
+offset_right = 781.0
+offset_bottom = 350.0
+text = "Join Lobby"
+
+[node name="LobbyMenu" type="Control" parent="Lobby"]
+auto_translate_mode = 1
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartGame" type="Button" parent="Lobby/LobbyMenu"]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 57.0
+offset_top = 84.0
+offset_right = 211.0
+offset_bottom = 138.0
+text = "Start Game"
+
+[node name="LobbyId" type="Button" parent="Lobby/LobbyMenu"]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 53.0
+offset_top = 21.0
+offset_right = 261.0
+offset_bottom = 71.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Lobby/LobbyMenu"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -167.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[connection signal="createLobby" from="Lobby" to="." method="_on_lobby_create_lobby"]
+[connection signal="joinLobby" from="Lobby" to="." method="_on_lobby_join_lobby"]
+[connection signal="pressed" from="Lobby/LobbySelect/CreateLobby" to="Lobby" method="_on_create_lobby_pressed"]
+[connection signal="pressed" from="Lobby/LobbySelect/JoinLobby" to="Lobby" method="_on_join_lobby_pressed"]
+[connection signal="pressed" from="Lobby/LobbyMenu/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="Lobby/LobbyMenu/LobbyId" to="Lobby" method="_on_lobby_id_pressed"]
