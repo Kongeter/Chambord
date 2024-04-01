@@ -1,8 +1,10 @@
 package lobby
 
 import (
+	"encoding/json"
 	"fmt"
 
+	"github.com/Kongeter/Chambord/enums"
 	"golang.org/x/net/websocket"
 )
 
@@ -37,9 +39,23 @@ func NewLobby(id string) *Lobby {
 
 func (l *Lobby) ConnectUser(u *User) int {
 	key := l.getUniqueId()
-	fmt.Println(key)
 	l.Users[key] = u
 	return key
+}
+func (l *Lobby) DisconnectUser(id int) bool {
+	delete(l.Users, id)
+	if len(l.Users) <= 0 {
+		return true
+	}
+	if l.Host == id {
+		for key := range l.Users {
+			l.Host = key
+			break
+		}
+	}
+	l.BroadcastLobbyInfo()
+	return false
+
 }
 
 func (l *Lobby) SetHost(id int) {
@@ -69,4 +85,40 @@ func (l *Lobby) BroadcastExcludeSelf(b []byte, id int) {
 		}
 
 	}
+}
+
+type UserData struct {
+	Id   int
+	Name string
+}
+type LobbyData struct {
+	Message int
+	Id      string
+	Users   []UserData
+	Host    int
+}
+
+func (l *Lobby) BroadcastLobbyInfo() {
+	users := make([]UserData, len(l.Users))
+	index := 0
+	for i, u := range l.Users {
+		users[index] = UserData{
+			Id:   i,
+			Name: u.Name,
+		}
+		index++
+	}
+	lobbyData := LobbyData{
+		Message: enums.Lobby,
+		Id:      l.Id,
+		Users:   users,
+		Host:    l.Host,
+	}
+	data, err := json.Marshal(lobbyData)
+	if err != nil {
+		fmt.Printf("oof")
+	} else {
+		go l.Broadcast(data)
+	}
+
 }

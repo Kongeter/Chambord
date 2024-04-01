@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d3xpj3y1n3dxa"]
+
+[ext_resource type="Shader" path="res://shaders/ripple.gdshader" id="1_5ustj"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_5ustj")
+shader_parameter/albedo = Color(0.495686, 0.280387, 0.171528, 1)
+shader_parameter/point_size = null
+shader_parameter/roughness = 1.0
+shader_parameter/specular = null
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/origin = Vector3(0.855, 0, 0)
+shader_parameter/ripple_color = Color(1, 0, 0, 1)
+shader_parameter/start_time = null

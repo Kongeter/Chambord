@@ -3,12 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://dvfr8j3njiywm" path="res://assets/grass.tscn" id="1_4k3rh"]
 [ext_resource type="PackedScene" uid="uid://bvpytvylfh02q" path="res://assets/church.tscn" id="2_wxdki"]
 [ext_resource type="PackedScene" uid="uid://co4sosofxpbg" path="res://assets/point.tscn" id="3_bbjai"]
+[ext_resource type="Material" uid="uid://d3xpj3y1n3dxa" path="res://materials/streetRipple.tres" id="3_mc231"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_64of3"]
-albedo_color = Color(0.72549, 0.560784, 0.341176, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_pcor8"]
-material = SubResource("StandardMaterial3D_64of3")
+[sub_resource type="BoxMesh" id="BoxMesh_1e0vd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7hkyr"]
 size = Vector3(0.737793, 0.605042, 0.353516)
@@ -35,7 +32,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.844777, 0.0323304, -0.0151
 
 [node name="street" type="MeshInstance3D" parent="Street/0" groups=["Material"]]
 transform = Transform3D(0.873873, 0, 0, 0, 0.085, 0, 0, 0, 0.2, -0.611176, 0.0468859, 0)
-mesh = SubResource("BoxMesh_pcor8")
+material_override = ExtResource("3_mc231")
+mesh = SubResource("BoxMesh_1e0vd")
 skeleton = NodePath("../../..")
 
 [node name="Area3D" type="Area3D" parent="Street/0" groups=["Collision"]]

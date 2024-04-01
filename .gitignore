@@ -3,5 +3,5 @@
 /workspace.xml
 .idea
 /backend/ChambordBackend
-/backend/certificate.pem
 /backend/key.pem
+/backend/cert.pem

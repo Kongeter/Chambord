@@ -4,18 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math/rand"
 	"strconv"
 
+	"github.com/Kongeter/Chambord/enums"
 	"github.com/Kongeter/Chambord/lobby"
 	"golang.org/x/net/websocket"
-)
-
-const (
-	Create = iota
-	Join
-	Message
-	Id
-	Lobby
 )
 
 type Server struct {
@@ -29,7 +23,8 @@ func NewServer() *Server {
 }
 
 type CreateData struct {
-	Name string
+	LobbyId string
+	Name    string
 }
 type JoinData struct {
 	LobbyId string
@@ -38,16 +33,6 @@ type JoinData struct {
 type YouAre struct {
 	Message int
 	Id      int
-}
-type UserData struct {
-	Id   int
-	Name string
-}
-type LobbyData struct {
-	Message int
-	Id      string
-	Users   []UserData
-	Host    int
 }
 
 func (s *Server) HandleWS(ws *websocket.Conn) {
@@ -66,6 +51,9 @@ func (s *Server) readLoop(ws *websocket.Conn) {
 		n, err := ws.Read(buf)
 		if err != nil {
 			if err == io.EOF {
+				if l != nil {
+					s.disconnect(l, myId)
+				}
 				break
 			}
 			fmt.Println("read error: ", err)
@@ -78,23 +66,28 @@ func (s *Server) readLoop(ws *websocket.Conn) {
 		t, _ := strconv.Atoi(string(msg[:1]))
 
 		switch t {
-		case Create:
-			l, _, myId = s.createLobby(ws)
-			sendUserInfo(ws, myId)
-			l.SetHost(myId)
-			broadcastLobbyInfo(l)
-			fmt.Println("lobby created")
+		case enums.Create:
+			err, l, _, myId = s.createLobby(ws, msg[1:])
+			if err != nil {
+				fmt.Println("error: ", err)
+			} else {
+				sendUserInfo(ws, myId)
+				l.SetHost(myId)
+				l.BroadcastLobbyInfo()
+				fmt.Println("lobby created")
 
-		case Join:
+			}
+
+		case enums.Join:
 			err, l, _, myId = s.joinLobby(ws, msg[1:])
 			if err != nil {
 				fmt.Println("error: ", err)
 			} else {
 				fmt.Println("joined lobby")
 				sendUserInfo(ws, myId)
-				broadcastLobbyInfo(l)
+				l.BroadcastLobbyInfo()
 			}
-		case Message:
+		case enums.Message:
 			if l != nil {
 				go l.BroadcastExcludeSelf(msg[1:], myId)
 			}
@@ -106,7 +99,7 @@ func (s *Server) readLoop(ws *websocket.Conn) {
 
 func sendUserInfo(ws *websocket.Conn, id int) {
 	userData := YouAre{
-		Message: Id,
+		Message: enums.Id,
 		Id:      id,
 	}
 	data, err := json.Marshal(userData)
@@ -118,45 +111,41 @@ func sendUserInfo(ws *websocket.Conn, id int) {
 
 }
 
-func broadcastLobbyInfo(l *lobby.Lobby) {
-	users := make([]UserData, len(l.Users))
-	index := 0
-	for i, u := range l.Users {
-		users[index] = UserData{
-			Id:   i,
-			Name: u.Name,
-		}
-		index++
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+func getLobbyId() string {
+	b := make([]byte, 6)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
 	}
-	lobbyData := LobbyData{
-		Message: Lobby,
-		Id:      l.Id,
-		Users:   users,
-		Host:    l.Host,
-	}
-	data, err := json.Marshal(lobbyData)
-	if err != nil {
-		fmt.Printf("oof")
-	} else {
-		l.Broadcast(data)
-	}
+	return string(b)
 
 }
 
-func (s *Server) createLobby(ws *websocket.Conn) (*lobby.Lobby, *lobby.User, int) {
-	u := lobby.NewUser(ws, "Ben")
-	l := lobby.NewLobby("test")
+func (s *Server) createLobby(ws *websocket.Conn, b []byte) (error, *lobby.Lobby, *lobby.User, int) {
+	var data CreateData
+	err := json.Unmarshal(b, &data)
+	if err != nil {
+		return err, nil, nil, 0
+	}
+	u := lobby.NewUser(ws, data.Name)
+	var l *lobby.Lobby
+	var lobbyId string
+	if data.LobbyId != "" {
+		lobbyId = data.LobbyId
+	} else {
+		lobbyId = getLobbyId()
+	}
+	l = lobby.NewLobby(lobbyId)
+
 	id := l.ConnectUser(u)
-	s.lobbies["test"] = l
-	fmt.Printf("lobby %s created", "test")
-	return l, u, id
+	s.lobbies[lobbyId] = l
+	return nil, l, u, id
 }
 
 func (s *Server) joinLobby(ws *websocket.Conn, b []byte) (error, *lobby.Lobby, *lobby.User, int) {
 	var data JoinData
-	fmt.Println(string(b))
 	err := json.Unmarshal(b, &data)
-	fmt.Println(data.LobbyId)
 	if err != nil {
 		return err, nil, nil, 0
 	}
@@ -168,5 +157,13 @@ func (s *Server) joinLobby(ws *websocket.Conn, b []byte) (error, *lobby.Lobby, *
 	}
 	fmt.Println(data.LobbyId)
 	return fmt.Errorf("lobby %s not found", data.LobbyId), nil, nil, 0
+
+}
+
+func (s *Server) disconnect(l *lobby.Lobby, userId int) {
+	lobbyEmpty := l.DisconnectUser(userId)
+	if lobbyEmpty {
+		delete(s.lobbies, l.Id)
+	}
 
 }
