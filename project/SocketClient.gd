@@ -15,12 +15,16 @@ var myId : int = 0
 var hostId: int
 var lobbyValue: String = ""
 
+var order = []
+var players
+var nextPlayer
+
 var socket = WebSocketPeer.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	connectToServer("wss://1223233612753928257.discordsays.com/api/ws")
+	#connectToServer("wss://1223233612753928257.discordsays.com/api/ws")
 	#connectToServer("wss://345654.xyz/ws")
-	#connectToServer("wss://localhost:1337/ws")
+	connectToServer("ws://localhost:1337/ws")
 	pass # Replace with function body.
 
 func RTCServerConnected():
@@ -51,11 +55,11 @@ func _process(delta):
 				if data.Message == Message.Id:
 					myId = data.Id
 				elif data.Message == Message.Lobby:
-					#lobbyValue = data.Id
-					#hostId = data.Host
-					#var players = JSON.parse_string(data.players) 
 					print(data.Id)
+					players = data.Users
 					lobby.showLobby(data.Id, true)
+					for p in players:
+						order.append(p.Id)
 					lobby.showPlayers(data.Users)
 				elif data.Message == Message.Message:
 					match data.f:
@@ -65,6 +69,8 @@ func _process(delta):
 							handlePlaceTile(data)
 						"fl":
 							handlePlaceFlag(data)
+						"tu":
+							handleTurn(data)
 	
 
 
@@ -167,3 +173,16 @@ func sendPlaceFlag(x,y, group,type, player):
 func handlePlaceFlag(data):
 	print("place flag handler")
 	placeFlag.emit(int(data.x), int(data.y), int(data.group), int(data.type), int(data.player))
+	
+
+signal playerTurn(player)
+
+func sendTurn(player):
+	print("test send")
+	sendMessgae({
+		"Message":Message.Message,
+		"f":"tu",
+		"player": player})
+	
+func handleTurn(data):
+	playerTurn.emit(data.player)

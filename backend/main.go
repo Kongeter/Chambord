@@ -6,13 +6,15 @@ import (
 	"net/http"
 
 	"github.com/Kongeter/Chambord/socket"
-	"golang.org/x/net/websocket"
 )
 
 func main() {
 	fmt.Println("started")
 	server := socket.NewServer()
-	http.Handle("/ws", websocket.Handler(server.HandleWS))
+	http.Handle("/ws", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Call the server's HandleWs method with the captured server instance
+		server.HandleWs(w, r)
+	}))
 	// err := http.ListenAndServeTLS(":443", "cert.pem", "key.pem", nil)
 	err := http.ListenAndServe(":1337", nil)
 	if err != nil {

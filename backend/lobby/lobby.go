@@ -5,18 +5,17 @@ import (
 	"fmt"
 
 	"github.com/Kongeter/Chambord/enums"
-	"golang.org/x/net/websocket"
 )
 
 type User struct {
-	Connection *websocket.Conn
-	Name       string
+	Channel chan<- []byte
+	Name    string
 }
 
-func NewUser(conn *websocket.Conn, name string) *User {
+func NewUser(ch chan<- []byte, name string) *User {
 	return &User{
-		Connection: conn,
-		Name:       name,
+		Channel: ch,
+		Name:    name,
 	}
 }
 func (u *User) ChangeName(name string) {
@@ -74,14 +73,14 @@ func (l *Lobby) getUniqueId() int {
 
 func (l *Lobby) Broadcast(b []byte) {
 	for _, u := range l.Users {
-		u.Connection.Write(b)
+		u.Channel <- b
 	}
 }
 
 func (l *Lobby) BroadcastExcludeSelf(b []byte, id int) {
 	for i, u := range l.Users {
 		if i != id {
-			u.Connection.Write(b)
+			u.Channel <- b
 		}
 
 	}
